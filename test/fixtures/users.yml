@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  {null: 
+  name: MyString
+  {null: MyString
+  false},: MyString
+  alias: MyString
+  {null: 
+  email: MyString
+  {null: MyString
+  false},: MyString
+  password: MyString
+  {null: 
+  role: 
+  {null: 
+
+two:
+  id: 1
+  {null: 
+  name: MyString
+  {null: MyString
+  false},: MyString
+  alias: MyString
+  {null: 
+  email: MyString
+  {null: MyString
+  false},: MyString
+  password: MyString
+  {null: 
+  role: 
+  {null: 

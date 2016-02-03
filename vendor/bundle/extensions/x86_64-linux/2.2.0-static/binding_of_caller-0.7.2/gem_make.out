@@ -1,0 +1,12 @@
+/usr/local/bin/ruby -r ./siteconf20160130-10215-epypp1.rb extconf.rb
+
+make "DESTDIR=" clean
+make: *** Нет правила для сборки цели `clean'.  Останов.
+
+make "DESTDIR="
+echo "Nada."
+Nada.
+
+make "DESTDIR=" install
+echo "Nada."
+Nada.
