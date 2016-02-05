@@ -15,3 +15,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+$(button).on("click", function() {$(button-group).fadeOut(); $(inputs).fadeIn();})
