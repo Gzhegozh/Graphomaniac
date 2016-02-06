@@ -7,6 +7,14 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = stylesheet_link_tag    'style'
     = stylesheet_link_tag    'head'
+    = stylesheet_link_tag    'left_sidebar'
+    = stylesheet_link_tag    'right_sidebar'
     = csrf_meta_tags
   %body
-    = yield
+    = render "partials/header"
+    #all_content
+      = render "partials/left_sidebar"
+      #specific_content
+        #page
+          = yield
+      = render "partials/right_sidebar"
