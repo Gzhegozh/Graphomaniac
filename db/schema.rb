@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205120106) do
+ActiveRecord::Schema.define(version: 20160209180039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,35 +36,19 @@ ActiveRecord::Schema.define(version: 20160205120106) do
 
   add_index "genres", ["category_id"], name: "index_genres_on_category_id", using: :btree
 
-  create_table "genres_records", id: false, force: :cascade do |t|
-    t.integer "record_id", null: false
-    t.integer "genre_id",  null: false
-  end
-
-  add_index "genres_records", ["genre_id"], name: "index_genres_records_on_genre_id", using: :btree
-  add_index "genres_records", ["record_id"], name: "index_genres_records_on_record_id", using: :btree
-
   create_table "records", force: :cascade do |t|
     t.string   "title"
-    t.string   "descrtiption"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
-
-  create_table "records_tags", id: false, force: :cascade do |t|
-    t.integer "record_id", null: false
-    t.integer "tag_id",    null: false
-  end
-
-  add_index "records_tags", ["record_id"], name: "index_records_tags_on_record_id", using: :btree
-  add_index "records_tags", ["tag_id"], name: "index_records_tags_on_tag_id", using: :btree
 
   create_table "records_users", id: false, force: :cascade do |t|
-    t.integer "user_id",   null: false
-    t.integer "record_id", null: false
+    t.integer "record_id"
+    t.integer "user_id"
   end
 
-  add_index "records_users", ["record_id"], name: "index_records_users_on_record_id", using: :btree
+  add_index "records_users", ["record_id", "user_id"], name: "index_records_users_on_record_id_and_user_id", using: :btree
   add_index "records_users", ["user_id"], name: "index_records_users_on_user_id", using: :btree
 
   create_table "tags", force: :cascade do |t|

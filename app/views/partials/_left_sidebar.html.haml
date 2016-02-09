@@ -4,25 +4,10 @@
       %a{ href: "/"}
         %strong
           Home
-    %li
-      %a{ href: "#"}
-        Some Page
-    -#  <li>
-    -#    <a href="#">Shortcuts</a>
-    -#  </li>
-    -#  <li>
-    -#    <a href="#">Overview</a>
-    -#  </li>
-    -#  <li>
-    -#    <a href="#">Events</a>
-    -#  </li>
-    -#  <li>
-    -#    <a href="#">About</a>
-    -#  </li>
-    -#  <li>
-    -#    <a href="#">Services</a>
-    -#  </li>
-    -#  <li>
-    -#    <a href="#">Contact</a>
-    -#  </li>
-    -#</ul>
+    - if user_signed_in?
+      %li
+        %a{ href: "/users/edit"}
+          Edit profile
+      %li
+        %a{ href: "/records/user/#{current_user.id}"}
+          My books

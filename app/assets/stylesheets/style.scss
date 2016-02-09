@@ -1,7 +1,7 @@
 #body{
     background-color: floralwhite;
 }
-#sign_up_form{
+#user_input_form{
     width: 40%;
     padding-bottom: 3%;
     padding-left: 5%;
@@ -30,3 +30,15 @@
   background-color: RGB(156, 30, 28);
   border-color: RGB(156, 30, 28);
 }
+
+ul.nav li a, ul.nav li a:visited {
+  color: RGB(174, 51, 60)
+}
+
+ul.nav li a:hover, ul.nav li a:active {
+  color: RGB(102, 0, 3)
+}
+//
+//ul.nav li.active a {
+//  color:
+//}

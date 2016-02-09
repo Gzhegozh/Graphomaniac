@@ -1,0 +1,2 @@
+module User::RecordsHelper
+end
