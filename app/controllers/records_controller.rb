@@ -4,7 +4,7 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    @records = Record.all
+    @records_authors = Record.get_records_with_authors
   end
 
   # GET /records/1

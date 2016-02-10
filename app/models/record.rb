@@ -10,4 +10,11 @@ class Record < ActiveRecord::Base
     @user = User.find_by_id(user_id)
     @records = Record.includes(:users).where('users.id' => user_id)
   end
+
+  def self.get_records_with_authors
+    @records_authors = Record.find_by_sql("SELECT * FROM records
+      INNER JOIN records_users ON records.id = records_users.record_id
+      INNER JOIN users ON users.id = records_users.user_id
+      ORDER BY users.id")
+  end
 end

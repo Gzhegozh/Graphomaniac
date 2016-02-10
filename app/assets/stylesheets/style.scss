@@ -1,5 +1,6 @@
 #body{
-    background-color: floralwhite;
+  background-color: floralwhite;
+  height: 90%;
 }
 #user_input_form{
     width: 40%;
@@ -26,11 +27,14 @@
     }
   }
 }
-.btn.btn-primary.btn-md{
+.btn.btn-primary{
   background-color: RGB(156, 30, 28);
   border-color: RGB(156, 30, 28);
 }
-
+.btn.btn-default{
+  border-color: #585858;
+  border-width: 1px;
+}
 ul.nav li a, ul.nav li a:visited {
   color: RGB(174, 51, 60)
 }

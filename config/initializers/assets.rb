@@ -8,6 +8,7 @@ Rails.application.config.assets.precompile += %w( logo.png )
 Rails.application.config.assets.precompile += %w( head.css )
 Rails.application.config.assets.precompile += %w( left_sidebar.css )
 Rails.application.config.assets.precompile += %w( right_sidebar.css )
+Rails.application.config.assets.precompile += %w( chapters.css )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 
