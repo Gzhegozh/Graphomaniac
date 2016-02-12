@@ -1,6 +1,5 @@
 class RecordsController < ApplicationController
   before_action :set_record, only: [:show, :edit, :update, :destroy]
-
   # GET /records
   # GET /records.json
   def index
@@ -24,6 +23,7 @@ class RecordsController < ApplicationController
 
   # GET /records/1/edit
   def edit
+    @chapters = Record.get_chapters(params[:id])
   end
 
   # POST /records

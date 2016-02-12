@@ -1,27 +1,33 @@
+#chapters
+  %ul
+    %li{id: "new_chapter", onclick: "new_chapter()", class: "btn btn-default"}
+      Create chapter
+
+  %ul{id: "sortable"}
+    - if !@chapters.empty?
+      - @chapters.each do |chapter|
+        %li{class: "ui-state-default", id: "#{chapter.order}"}
+          = chapter.title
+
 :javascript
   $(function() {
     $( "#sortable" ).sortable({
       revert: true
     });
-    $( "#draggable" ).draggable({
-      connectToSortable: "#sortable",
-      helper: "clone",
-      revert: "invalid"
-    });
     $( "ul, li" ).disableSelection();
   });
 
+  $(".ui-state-default").click(function(){
+    alert("aaaaaa");
+  });
 
-#chapters
-  %ul
-    %li{id: "draggable", class: "ui-state-highlight"}
-      Drag me down
+  function new_chapter(){
+    var newLi = '<li class="display ui-state-default ui-sortable-handle">Untitled</li><input type="text" class="edit ui-sortable-handle" style="display:none">'
+    $("#sortable").append(newLi)
+  }
 
-  %ul{id: "sortable"}
-    %li{class: "ui-state-default"}
-      Item 1
-    %li{class: "ui-state-default"}
-      Item 2
-    -#<li class="ui-state-default">Item 3</li>
-    -#<li class="ui-state-default">Item 4</li>
-    -#<li class="ui-state-default">Item 5</li>
+  $(".edit").focusout(function(){
+  $(this).hide();  $(this).siblings(".display").show().text($(this).val());
+  });
+
+

@@ -1,15 +1,18 @@
 = form_for @record, html: { class: "form form-horizontal record" } do |f|
   .form-group
-    = f.label :title, class: 'control-label col-lg-2'
-    .col-lg-10
+    = f.label :title, class: 'control-label col-lg-1', style: 'text-align: left'
+    .col-lg-5
       = f.text_field :title, class: 'form-control', required: true
     = f.error_span(:title)
   .form-group
-    = f.label :description, class: 'control-label col-lg-2'
-    .col-lg-10
+    = f.label :description, class: 'control-label col-lg-1', style: 'text-align: left'
+    .col-lg-5
       = f.text_area :description, class: 'form-control', rows: '3', required: true
     = f.error_span(:description)
   .form-group
-    .col-lg-offset-2.col-lg-10
+    .col-lg-offset-1.col-lg-10
       = f.submit nil,class: 'btn btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), records_path, :class => 'btn btn-default'
+  .form-group
+    .col-lg-12
+      %textarea{id: 'chapter', class: 'form-control', rows: '20', required: true}

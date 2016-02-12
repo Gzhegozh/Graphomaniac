@@ -20,7 +20,7 @@
               -#%td= link_to record.id, record_path(record)
               %td= record.title
               %td= record.description
-              %td= record.created_at.strftime("%d %b. %Y %H:%M")
+              %td= record.updated_at.strftime("%d %b. %Y %H:%M")
               %td
                 = record.name
                 -if record.alias
@@ -33,4 +33,5 @@
         .alert-info
           There is no books yet but you may write yours!
     %br/
-    = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"
+    - if user_signed_in?
+      = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"

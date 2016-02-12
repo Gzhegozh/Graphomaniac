@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209180039) do
+ActiveRecord::Schema.define(version: 20160212085117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20160209180039) do
 
   create_table "chapters", force: :cascade do |t|
     t.string  "title",     null: false
-    t.string  "content"
+    t.text    "content"
     t.integer "order",     null: false
     t.integer "record_id"
   end
