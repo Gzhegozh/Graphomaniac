@@ -9,6 +9,15 @@
         %li{class: "ui-state-default", id: "#{chapter.order}"}
           = chapter.title
 
+
+:javascript
+  $(".ui-state-default").click(function() {
+    url = 'get_chapter_text/' + this.id
+    $.get( url, function(data) {
+      $("#chapter").html(data['text']);
+    });
+  });
+
 :javascript
   $(function() {
     $( "#sortable" ).sortable({
@@ -17,12 +26,9 @@
     $( "ul, li" ).disableSelection();
   });
 
-  $(".ui-state-default").click(function(){
-    alert("aaaaaa");
-  });
 
   function new_chapter(){
-    var newLi = '<li class="display ui-state-default ui-sortable-handle">Untitled</li><input type="text" class="edit ui-sortable-handle" style="display:none">'
+    var newLi = '<li class="display ui-state-default ui-sortable-handle">Untitled</li>">'
     $("#sortable").append(newLi)
   }
 

@@ -12,6 +12,11 @@ class RecordsController < ApplicationController
 
   end
 
+  def get_chapter_text
+    @text = Record.get_chapter_text(params[:id], params[:order])
+    render json: {text: @text}
+  end
+
   def show_user_records
     @records = Record.show_user_records(current_user.id)
   end

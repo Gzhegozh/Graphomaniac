@@ -5,3 +5,14 @@
   = render :partial => "form"
 = content_for :chapters do
   = render "partials/chapters", :chapters => @chapters
+.simple-pagination
+
+:javascript
+  $(function() {
+    var size = parseInt("#{@chapters.size}");
+    $(".simple-pagination").pagination({
+      items: size,
+      itemsOnPage: 1,
+      cssStyle: 'compact-theme'
+    });
+  });

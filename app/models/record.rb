@@ -20,6 +20,12 @@ class Record < ActiveRecord::Base
        ORDER BY chapters.order")
   end
 
+  def self.get_chapter_text(record_id, order)
+    connection = ActiveRecord::Base.connection
+    @text = connection.execute("SELECT chapters.content FROM chapters WHERE chapters.record_id = #{record_id} AND chapters.order = #{order}")
+    @text[0]["content"]
+  end
+
   def self.get_records_with_authors
     @records_authors = Record.find_by_sql("SELECT name, alias, title, description, records.updated_at, record_id FROM records
       INNER JOIN records_users ON records.id = records_users.record_id

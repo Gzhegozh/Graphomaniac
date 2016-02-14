@@ -1,7 +1,7 @@
 @import url('http://fonts.googleapis.com/css?family=Open+Sans');
 
 #head {
-  height: 80px;
+  height: 60px;
   background-color: RGB(156, 30, 28);
   color: white;
 
@@ -10,8 +10,8 @@
   }
 
   #icon {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
   }
 
   #title {
@@ -20,7 +20,7 @@
     padding-left: 5%;
     h2{
       font-family: "Open Sans Extrabold";
-      font-size: 30px;
+      font-size: 20px;
       color: white;
     }
   }
@@ -29,7 +29,7 @@
     font-family: "Open Sans Semibold";
     display: inline-block;
     float: right;
-    height: 80px;
+    height: 60px;
     width: 30%;
 
     .btn-group{
