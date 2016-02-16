@@ -12,6 +12,7 @@ class Record < ActiveRecord::Base
     @records = Record.includes(:users).where('users.id' => user_id)
   end
 
+
   def self.get_chapters(record_id)
     @chapters = Record.find_by_sql("SELECT chapters.title AS title, chapters.content, chapters.order
        FROM records LEFT OUTER JOIN chapters
@@ -22,8 +23,8 @@ class Record < ActiveRecord::Base
 
   def self.get_chapter_text(record_id, order)
     connection = ActiveRecord::Base.connection
-    @text = connection.execute("SELECT chapters.content FROM chapters WHERE chapters.record_id = #{record_id} AND chapters.order = #{order}")
-    @text[0]["content"]
+    @text = connection.execute("SELECT chapters.title, chapters.content FROM chapters WHERE chapters.record_id = #{record_id} AND chapters.order = #{order}")
+    @text[0]
   end
 
   def self.get_records_with_authors

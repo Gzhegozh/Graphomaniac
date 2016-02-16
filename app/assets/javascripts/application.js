@@ -16,5 +16,37 @@
 //= require turbolinks
 //= require_tree .
 
+$(document).on('ready page:change', function () {
 
-//$(button).on("click", function() {$(button-group).fadeOut(); $(inputs).fadeIn();})
+    var title_changed = false;
+    var content_changed = false;
+    var current_chapter = 0;
+
+    $("#chapter_title").keydown( function(){
+        title_changed = true;
+    });
+
+    $("#chapter").keydown( function(){
+        content_changed = true;
+        alert(current_chapter);
+    });
+
+    $(".ui-state-default").click(function() {
+        url = 'get_chapter_text/' + this.id;
+        current_chapter = this.id;
+        title_changed = false;
+        content_changed = false;
+        $.get( url, function(data) {
+            $("#chapter").html(data['text']);
+            $("#chapter_title").html(data['title']);
+        });
+    });
+
+    $(function() {
+        $( "#sortable" ).sortable({
+            revert: true
+        });
+        $( "ul, li" ).disableSelection();
+    });
+
+});

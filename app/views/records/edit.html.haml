@@ -5,14 +5,39 @@
   = render :partial => "form"
 = content_for :chapters do
   = render "partials/chapters", :chapters => @chapters
+.form-group
+  .col-lg-12
+    %label{for: "usr"}
+      Chapter Title
+    %textarea{class: "form-control", type: "text", id: "chapter_title", rows: '1', required: true, style: "font-weight: bold"}
+      - @chapters.each do |chapter|
+        = chapter.title
+        - break
+    %br
+    %textarea{id: 'chapter', class: 'form-control', rows: '20', required: true}
+      - @chapters.each do |chapter|
+        = chapter.content
+        - break
+    %br
 .simple-pagination
+%br
 
 :javascript
+
   $(function() {
     var size = parseInt("#{@chapters.size}");
     $(".simple-pagination").pagination({
       items: size,
       itemsOnPage: 1,
-      cssStyle: 'compact-theme'
+      cssStyle: 'compact-theme',
+      onPageClick: function(pageNumber){
+        url = 'get_chapter_text/' + pageNumber;
+        title_changed = false;
+        content_changed = false;
+        $.get( url, function(data) {
+          $("#chapter").html(data['text']);
+          $("#chapter_title").html(data['title']);
+        });
+      }
     });
   });

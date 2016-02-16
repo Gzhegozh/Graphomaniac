@@ -2,38 +2,37 @@
   %ul
     %li{id: "new_chapter", onclick: "new_chapter()", class: "btn btn-default"}
       Create chapter
-
-  %ul{id: "sortable"}
     - if !@chapters.empty?
-      - @chapters.each do |chapter|
-        %li{class: "ui-state-default", id: "#{chapter.order}"}
-          = chapter.title
+      %ul{id: "sortable"}
+        - @chapters.each do |chapter|
+          %li{class: "ui-state-default", id: "#{chapter.order}"}
+            = chapter.title
 
 
 :javascript
-  $(".ui-state-default").click(function() {
-    url = 'get_chapter_text/' + this.id
-    $.get( url, function(data) {
-      $("#chapter").html(data['text']);
-    });
-  });
-
-:javascript
-  $(function() {
-    $( "#sortable" ).sortable({
-      revert: true
-    });
-    $( "ul, li" ).disableSelection();
-  });
-
 
   function new_chapter(){
-    var newLi = '<li class="display ui-state-default ui-sortable-handle">Untitled</li>">'
-    $("#sortable").append(newLi)
+    var newLi = '<li class="display ui-state-default ui-sortable-handle" id="#{@chapters.count + 1}">Untitled</li>';
+    $("#sortable").append(newLi);
+    var order = #{@chapters.count + 1};
+    title_changed = false;
+    content_changed = false;
+    $.ajax({
+        type: "POST",
+        url: '/chapters.json',
+        data: {
+            chapter: {
+                title: "Untitled",
+                content: "",
+                order: order,
+                record_id: #{params[:id]}
+            }
+        },
+        dataType: 'json',
+        success: function(msg) {
+            alert( "Data Saved: " + msg );
+        }
+    });
   }
-
-  $(".edit").focusout(function(){
-  $(this).hide();  $(this).siblings(".display").show().text($(this).val());
-  });
 
 
