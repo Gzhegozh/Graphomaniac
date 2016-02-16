@@ -16,31 +16,25 @@
 //= require turbolinks
 //= require_tree .
 
+var changed = false;
+var current_chapter;
+var updated_title;
+var updated_content;
+
 $(document).on('ready page:change', function () {
 
-    var title_changed = false;
-    var content_changed = false;
-    var current_chapter = 0;
-
-    $("#chapter_title").keydown( function(){
-        title_changed = true;
+    $("#chapter_title").keyup(function() {
+        changed = true;
+        updated_title = $(this).val();
+        updated_content = $("#chapter").text();
     });
 
-    $("#chapter").keydown( function(){
-        content_changed = true;
-        alert(current_chapter);
+    $("#chapter").keyup(function() {
+        changed = true;
+        updated_content = $(this).val();
+        updated_title = $("#chapter_title").text();
     });
 
-    $(".ui-state-default").click(function() {
-        url = 'get_chapter_text/' + this.id;
-        current_chapter = this.id;
-        title_changed = false;
-        content_changed = false;
-        $.get( url, function(data) {
-            $("#chapter").html(data['text']);
-            $("#chapter_title").html(data['title']);
-        });
-    });
 
     $(function() {
         $( "#sortable" ).sortable({
@@ -50,3 +44,4 @@ $(document).on('ready page:change', function () {
     });
 
 });
+

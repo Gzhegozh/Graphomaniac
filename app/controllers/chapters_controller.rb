@@ -1,6 +1,6 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create, :update]
   # GET /chapters
   # GET /chapters.json
   def index
@@ -40,7 +40,7 @@ class ChaptersController < ApplicationController
   # PATCH/PUT /chapters/1.json
   def update
     respond_to do |format|
-      if @chapter.update(chapter_params)
+      if Chapter.update_by_order(params)
         format.html { redirect_to @chapter, notice: 'Chapter was successfully updated.' }
         format.json { render :show, status: :ok, location: @chapter }
       else

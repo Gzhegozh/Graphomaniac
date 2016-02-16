@@ -32,8 +32,7 @@
       cssStyle: 'compact-theme',
       onPageClick: function(pageNumber){
         url = 'get_chapter_text/' + pageNumber;
-        title_changed = false;
-        content_changed = false;
+        changed = false;
         $.get( url, function(data) {
           $("#chapter").html(data['text']);
           $("#chapter_title").html(data['title']);
