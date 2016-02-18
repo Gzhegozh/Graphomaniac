@@ -40,6 +40,7 @@ $(document).on('ready page:change', function () {
     $("#chapter_title").keyup(function() {
         changed = true;
         updated_title = $(this).val();
+        $("#"+current_chapter).html(updated_title);
         updated_content = $("#chapter").val();
     });
 

@@ -24,8 +24,8 @@
     current_chapter = this.id;
     changed = false;
     $.get( url, function(data) {
-      $("#chapter").html(data['text']);
-      $("#chapter_title").html(data['title']);
+      $("#chapter").val(data['text']);
+      $("#chapter_title").val(data['title']);
     });
   });
 
