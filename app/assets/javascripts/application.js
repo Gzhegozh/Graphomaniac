@@ -21,18 +21,32 @@ var current_chapter;
 var updated_title;
 var updated_content;
 
+function getChapterByIndex(index)
+{
+    var matchingElement;
+    var allElements = document.getElementsByTagName('*');
+    for (var i = 0, n = allElements.length; i < n; i++)
+    {
+        if (allElements[i].getAttribute('data-index') == index)
+        {
+            matchingElement = allElements[i];
+        }
+    }
+    return matchingElement;
+}
+
 $(document).on('ready page:change', function () {
 
     $("#chapter_title").keyup(function() {
         changed = true;
         updated_title = $(this).val();
-        updated_content = $("#chapter").text();
+        updated_content = $("#chapter").val();
     });
 
     $("#chapter").keyup(function() {
         changed = true;
         updated_content = $(this).val();
-        updated_title = $("#chapter_title").text();
+        updated_title = $("#chapter_title").val();
     });
 
 

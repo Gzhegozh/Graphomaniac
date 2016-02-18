@@ -7,55 +7,31 @@
         - i = 0
         - @chapters.each do |chapter|
           - i += 1
-          %li{class: "ui-state-default", id: "#{chapter.order}", index: "#{i}"}
+          %li{class: "ui-state-default", id: "#{chapter.order}", 'data-index': "#{i}"}
             = chapter.title
 
 
 :javascript
 
-    current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
-    updated_title = $("#chapter_title").text();
-    updated_content = $("#chapter").text();
+  current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
+  updated_title = $("#chapter_title").text();
+  updated_content = $("#chapter").text();
+  changed = false;
 
-    $('#sortable').on('click', '.ui-state-default', function() {
-      save()
-      url = 'get_chapter_text/' + this.id;
-      current_chapter = this.id;
-      changed = false;
-      $.get( url, function(data) {
-        $("#chapter").html(data['text']);
-        $("#chapter_title").html(data['title']);
-      });
+  $('#sortable').on('click', '.ui-state-default', function() {
+    save();
+    url = 'get_chapter_text/' + this.id;
+    current_chapter = this.id;
+    changed = false;
+    $.get( url, function(data) {
+      $("#chapter").html(data['text']);
+      $("#chapter_title").html(data['title']);
     });
-
-  function set_pagination(){
-    $(".simple-pagination").pagination({
-
-    });
-  }
-  function save(){
-    if (changed){
-      $.ajax({
-        type: "PUT",
-        url: '/chapters/1.json',
-        data: {
-          chapter: {
-            title: updated_title,
-            content: updated_content,
-            order: current_chapter,
-            record_id: parseInt("#{params[:id]}")
-          }
-        },
-        dataType: 'json',
-        success: function(msg) {
-          alert( "Data Saved: " + msg );
-        }
-      });
-    }
-  }
+  });
 
   function new_chapter(){
-    var newLi = '<li class="ui-state-default ui-sortable-handle" id="#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1}">Untitled</li>';
+    save();
+    var newLi = '<li class="ui-state-default ui-sortable-handle" data-index="#{@chapters.count + 1}" id="#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1}">Untitled</li>';
     $("#sortable").append(newLi);
     var order = #{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1};
     changed = false;
@@ -75,4 +51,25 @@
         alert( "Data Saved: " + msg );
       }
     });
+  }
+
+  function save(){
+    if (changed){
+      $.ajax({
+        type: "PUT",
+        url: '/chapters/1.json',
+        data: {
+          chapter: {
+            title: updated_title,
+            content: updated_content,
+            order: current_chapter,
+            record_id: parseInt("#{params[:id]}")
+          }
+        },
+        dataType: 'json',
+        success: function(msg) {
+          alert( "Data Saved: " + msg );
+        }
+      });
+    }
   }

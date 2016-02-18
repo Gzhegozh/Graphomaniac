@@ -29,9 +29,11 @@
     $(".simple-pagination").pagination({
       items: size,
       itemsOnPage: 1,
+
       cssStyle: 'compact-theme',
-      onPageClick: function(pageNumber){
-        url = 'get_chapter_text/' + pageNumber;
+      onPageClick: page_click(pageNumber){
+        save();
+        url = 'get_chapter_text/' + getChapterByIndex(pageNumber).id;
         changed = false;
         $.get( url, function(data) {
           $("#chapter").html(data['text']);
