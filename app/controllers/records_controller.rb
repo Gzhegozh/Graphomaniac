@@ -35,7 +35,6 @@ class RecordsController < ApplicationController
   # POST /records.json
   def create
     @record = Record.new(record_params)
-
     respond_to do |format|
       if @record.save
         format.html { redirect_to @record, notice: 'Record was successfully created.' }
@@ -46,6 +45,7 @@ class RecordsController < ApplicationController
       end
     end
     Record.add_user_record(current_user.id, @record.id)
+    @ch = Chapter.create(title: 'Untitled', content: '', order: 1, record_id: @record.id);
   end
 
   # PATCH/PUT /records/1
