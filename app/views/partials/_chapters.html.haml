@@ -12,7 +12,6 @@
 
 
 :javascript
-
   current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
   updated_title = $("#chapter_title").text();
   updated_content = $("#chapter").text();
@@ -21,6 +20,7 @@
   $('#sortable').on('click', '.ui-state-default', function() {
     save();
     url = 'get_chapter_text/' + this.id;
+    $(".simple-pagination").pagination('selectPage', $(this).attr("data-index"));
     current_chapter = this.id;
     changed = false;
     $.get( url, function(data) {
@@ -52,7 +52,6 @@
       }
     });
   }
-
   function save(){
     if (changed){
       $.ajax({

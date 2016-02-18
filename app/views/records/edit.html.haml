@@ -23,16 +23,15 @@
 %br
 
 :javascript
-
   $(function() {
     var size = parseInt("#{@chapters.size}");
     $(".simple-pagination").pagination({
       items: size,
       itemsOnPage: 1,
-
       cssStyle: 'compact-theme',
-      onPageClick: page_click(pageNumber){
+      onPageClick: function(pageNumber){
         save();
+        current_chapter = getChapterByIndex(pageNumber).id;
         url = 'get_chapter_text/' + getChapterByIndex(pageNumber).id;
         changed = false;
         $.get( url, function(data) {
