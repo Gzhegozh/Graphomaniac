@@ -1,5 +1,9 @@
+require 'active_support/concern'
+
 class RecordsController < ApplicationController
   before_action :set_record, only: [:show, :edit, :update, :destroy]
+  before_filter :comments, only: [:show, :edit]
+  extend ActiveSupport::Concern
   # GET /records
   # GET /records.json
   def index
@@ -10,6 +14,12 @@ class RecordsController < ApplicationController
   # GET /records/1.json
   def show
 
+  end
+
+  def comments
+    @commentable = find_commentable
+    @comments = @commentable.comments.arrange(:order => :created_at)
+    @comment = Comment.new
   end
 
   def get_chapter_text
@@ -81,5 +91,9 @@ class RecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
       params[:record].permit(:title, :description)
+    end
+
+    def find_commentable
+      params[:controller].singularize.classify.constantize.find(params[:id])
     end
 end

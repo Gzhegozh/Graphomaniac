@@ -1,6 +1,7 @@
 class Record < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :chapters
+  has_many :comments, :as => :commentable, :dependent => :destroy
 
   def self.add_user_record(user_id, record_id)
     @user = User.find_by_id(user_id)
