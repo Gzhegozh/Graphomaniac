@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get 'records/user/:id' => 'records#show_user_records'
   get 'records/:id/get_chapter_text/:order' => 'records#get_chapter_text'
+  post 'chapters/reorder/:order' => 'chapters#reorder'
 
   #get 'users/sign_up'   => 'user/registrations#new'
   # Example of regular route:

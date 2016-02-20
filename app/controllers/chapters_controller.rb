@@ -1,6 +1,6 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token, only: [:create, :update]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :reorder]
   # GET /chapters
   # GET /chapters.json
   def index
@@ -21,6 +21,9 @@ class ChaptersController < ApplicationController
   def edit
   end
 
+  def reorder
+    Chapter.reorder(params)
+  end
   # POST /records
   # POST /chapters.json
   def create

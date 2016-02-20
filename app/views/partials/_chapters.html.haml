@@ -29,6 +29,26 @@
     });
   });
 
+  $('#sortable').on("sortstop", function () {
+    $(".ui-state-default").each(function(index){
+      $(this).attr('data-index', index + 1);
+      $.ajax({
+      type: "POST",
+      url: '/chapters/reorder/' + this.id,
+        data: {
+          chapter: {
+            order: $(this).attr('data-index'),
+            record_id: parseInt("#{params[:id]}")
+          }
+        },
+        dataType: 'json',
+        success: function(msg) {
+          alert( "Data Saved: " + msg );
+        }
+      });
+    });
+  });
+
   function new_chapter(){
     save();
     var newLi = '<li class="ui-state-default ui-sortable-handle" data-index="#{@chapters.count + 1}" id="#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1}">Untitled</li>';
@@ -52,6 +72,7 @@
       }
     });
   }
+
   function save(){
     if (changed){
       $.ajax({
