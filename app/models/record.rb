@@ -13,6 +13,9 @@ class Record < ActiveRecord::Base
     @records = Record.includes(:users).where('users.id' => user_id)
   end
 
+  def self.get_author(id)
+    @author = User.includes(:records).where('record.id' => id)
+  end
 
   def self.get_chapters(record_id)
     @chapters = Record.find_by_sql("SELECT chapters.title AS title, chapters.content, chapters.order

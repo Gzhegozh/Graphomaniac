@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
      @parent_id = params.delete(:parent_id)
      @commentable = find_commentable
      @comment = Comment.new( :parent_id => @parent_id,
+                             :user => current_user.name,
                              :commentable_id => @commentable.id,
                              :commentable_type => @commentable.class.to_s)
   end
@@ -11,6 +12,7 @@ class CommentsController < ApplicationController
   def create
      @commentable = find_commentable
      @comment = @commentable.comments.build(params.require(:comment).permit(:parent_id, :content))
+     @comment.user = current_user.name
      if @comment.save
        flash[:notice] = "Successfully created comment."
        redirect_to @commentable

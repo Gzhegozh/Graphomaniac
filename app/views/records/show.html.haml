@@ -1,6 +1,7 @@
 - model_class = Record
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1
+    By
 
 .col-lg-2
   %strong= model_class.human_attribute_name(:title) + ':'
@@ -13,6 +14,7 @@
 %br/
 %br/
 %br/
+
 .col-lg-3
   = link_to t('.back', :default => t("helpers.links.back")), records_path, :class => 'btn btn-default'
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_record_path(@record), :class => 'btn btn-default'

@@ -3,9 +3,6 @@
   %p
     = f.label :content, "New comment"
     %br
-    = f.text_area :content, :rows => 4
+    = f.text_area :content, :rows => 4, class: "form-control"
   %p
-    = f.submit "Post Comment"
-
-:javascript
-  alert("#{@commentable.class.to_s}")
+    = f.submit "Post Comment", class: "btn btn-default"

@@ -21,9 +21,15 @@
     %br
 .simple-pagination
 -#= link_to t('.destroy', :default => t("helpers.links.destroy")), chapter_path(), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
-= nested_comments @comments
-= render "comments/form"
 %br
+.container.col-lg-12{id: 'comments-line'}
+  %h2
+    Comments
+  %hr
+  %section{class:"comment-list"}
+    = nested_comments @comments
+  = render "comments/form"
+
 
 :javascript
   $(function() {

@@ -1,8 +1,22 @@
-.media-body
-  -#%h4.media-heading=comment.user.name
-  %i= comment.created_at.strftime('%b %d, %Y at %H:%M')
-  %p= simple_format comment.content
-  .actions
-    = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], :parent_id => comment)
-  .col-md-offset-1
-    = nested_comments(comment.children, 1)
+.col-md-2.col-sm-2.hidden-xs
+  %figure{class:"thumbnail"}
+    %img{class:"img-responsive", src:"http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"}
+    %figcaption{class:"text-center"}
+      = comment.user
+.col-md-10.col-sm-10
+  .panel.panel-default.arrow.left
+    .panel-body
+      %header{class: "text-left"}
+        .comment-user
+          %i{class: "fa fa-user"}
+            =comment.user
+        %time{class: "comment-date"}
+          %i{class: "fa fa-clock-o"}
+            = comment.created_at.strftime('%b %d, %Y at %H:%M')
+      .comment-post
+        %p
+          = simple_format comment.content
+      %p{class:"text-right"}
+        = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], :parent_id => comment), class: "btn btn-default btn-sm"
+.col-md-offset-1
+  = nested_comments(comment.children, 1)

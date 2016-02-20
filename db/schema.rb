@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160220122750) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
+    t.string   "user"
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.string   "ancestry"
