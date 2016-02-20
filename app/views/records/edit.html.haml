@@ -4,7 +4,11 @@
     %h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
   = render :partial => "form"
 = content_for :chapters do
-  = render "partials/chapters", :chapters => @chapters
+  #chapters
+    %ul
+      %li{id: "new_chapter", onclick: "new_chapter()", class: "btn btn-default"}
+        Create Chapter
+    = render "partials/chapters", :chapters => @chapters
 .form-group
   .col-lg-12
     %label{for: "usr"}

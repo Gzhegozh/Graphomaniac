@@ -14,8 +14,50 @@
 %br/
 %br/
 %br/
+= content_for :chapters do
+  #chapters
+    = render "partials/chapters", :chapters => @chapters
+.form-group
+  .col-lg-12
+    %label{for: "usr"}
+      Chapter Title
+    %textarea{class: "form-control", type: "text", id: "chapter_title", rows: '1', disabled: "true", style: "font-weight: bold"}
+      - @chapters.each do |chapter|
+        = chapter.title
+        - break
+    %br
+    %textarea{id: 'chapter', class: 'form-control', disabled: "true", rows: '20'}
+      - @chapters.each do |chapter|
+        = chapter.content
+        - break
+    %br
+.simple-pagination
+%br
+.container.col-lg-12{id: 'comments-line'}
+  %h2
+    Comments
+  %hr
+  %section{class:"comment-list"}
+    = nested_comments @comments
+  = render "comments/form"
 
-.col-lg-3
-  = link_to t('.back', :default => t("helpers.links.back")), records_path, :class => 'btn btn-default'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_record_path(@record), :class => 'btn btn-default'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), record_path(@record), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+
+:javascript
+  $(function() {
+    var size = parseInt("#{@chapters.size}");
+    $(".simple-pagination").pagination({
+      items: size,
+      itemsOnPage: 1,
+      cssStyle: 'compact-theme',
+      onPageClick: function(pageNumber){
+        save();
+        current_chapter = getChapterByIndex(pageNumber).id;
+        url = "#{params[:id]}" + '/get_chapter_text/' + getChapterByIndex(pageNumber).id;
+        changed = false;
+        $.get( url, function(data) {
+          $("#chapter").val(data['text']);
+          $("#chapter_title").val(data['title']);
+        });
+      }
+    });
+  });

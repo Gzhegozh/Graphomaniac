@@ -13,7 +13,7 @@ class RecordsController < ApplicationController
   # GET /records/1
   # GET /records/1.json
   def show
-    @author = Record.get_author(params[:id]);
+    @chapters = Record.get_chapters(params[:id])
   end
 
   def comments
