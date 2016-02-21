@@ -13,6 +13,15 @@
   updated_content = $("#chapter").text();
   changed = false;
 
+  $( "#sortable" ).sortable({
+    appendTo: document.body
+  });
+
+  if (window.location.toString().indexOf("edit") != -1)
+    $( "#sortable" ).sortable( "option", "disabled", false );
+  else
+    $( "#sortable" ).sortable( "option", "disabled", true );
+
   $('#sortable').on('click', '.ui-state-default', function() {
     save();
     url = 'get_chapter_text/' + this.id;
