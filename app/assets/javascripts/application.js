@@ -40,7 +40,7 @@ $(document).on('ready page:change', function () {
     $("#chapter_title").keyup(function() {
         changed = true;
         updated_title = $(this).val();
-        $("#"+current_chapter).html(updated_title);
+        $("#"+current_chapter).html(updated_title + '<span class="glyphicon glyphicon-remove" id='+current_chapter+' style="float: right">');
         updated_content = $("#chapter").val();
     });
 

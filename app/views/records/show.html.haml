@@ -42,24 +42,3 @@
     = nested_comments @comments
   = render "comments/form"
 
-
-:javascript
-
-  $(function() {
-    var size = parseInt("#{@chapters.size}");
-    $(".simple-pagination").pagination({
-      items: size,
-      itemsOnPage: 1,
-      cssStyle: 'compact-theme',
-      onPageClick: function(pageNumber){
-        save();
-        current_chapter = getChapterByIndex(pageNumber).id;
-        url = "#{params[:id]}" + '/get_chapter_text/' + getChapterByIndex(pageNumber).id;
-        changed = false;
-        $.get( url, function(data) {
-          $("#chapter").val(data['text']);
-          $("#chapter_title").val(data['title']);
-        });
-      }
-    });
-  });

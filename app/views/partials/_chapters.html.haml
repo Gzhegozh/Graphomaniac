@@ -5,13 +5,44 @@
       - i += 1
       %li{class: "ui-state-default", id: "#{chapter.order}", 'data-index': "#{i}"}
         = chapter.title
+        - if current_page?(edit_record_path)
+          %span{class: "glyphicon glyphicon-remove", id: "#{chapter.order}", style: "float: right"}
 
 
 :javascript
+
   current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
   updated_title = $("#chapter_title").text();
   updated_content = $("#chapter").text();
   changed = false;
+
+  var size = parseInt("#{@chapters.size}");
+  var max = parseInt("#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order]}");
+
+  $(".simple-pagination").pagination({
+    items: size,
+    itemsOnPage: 1,
+    cssStyle: 'compact-theme',
+    onPageClick: function(pageNumber){
+      save();
+      current_chapter = pageNumber;
+      changed = false;
+      $.ajax({
+      type: "GET",
+      url: '/chapters/1',
+      data: {
+        chapter: {
+          order: pageNumber,
+          record_id: parseInt("#{params[:id]}")
+        }
+      },
+      dataType: 'json'
+      }).success(function(data) {
+        $("#chapter").val(data['text']);
+        $("#chapter_title").val(data['title']);
+      });
+    }
+  });
 
   $( "#sortable" ).sortable({
     appendTo: document.body
@@ -24,42 +55,64 @@
 
   $('#sortable').on('click', '.ui-state-default', function() {
     save();
-    url = 'get_chapter_text/' + this.id;
     $(".simple-pagination").pagination('selectPage', $(this).attr("data-index"));
     current_chapter = this.id;
     changed = false;
-    $.get( url, function(data) {
-      $("#chapter").val(data['text']);
-      $("#chapter_title").val(data['title']);
-    });
+  });
+
+  $('#sortable').on('click', '.glyphicon.glyphicon-remove', function() {
+    size--;
+    $("#sortable #" + $(this).attr('id').toString()).remove();
+    $.ajax({
+      type: "DELETE",
+      url: '/chapters/1.json',
+      data: {
+        chapter: {
+          order: $(this).attr('id'),
+          record_id: parseInt("#{params[:id]}")
+        }
+      },
+      dataType: 'json'
+      }).success(function(data) {
+        reorder();
+        $(".simple-pagination").pagination('selectPage', 1);
+        $(".simple-pagination").pagination('updateItems', size);
+      });
   });
 
   $('#sortable').on("sortstop", function () {
-    $(".ui-state-default").each(function(index){
-      $(this).attr('data-index', index + 1);
-      $.ajax({
-      type: "POST",
-      url: '/chapters/reorder/' + this.id,
-        data: {
-          chapter: {
-            order: $(this).attr('data-index'),
-            record_id: parseInt("#{params[:id]}")
-          }
-        },
-        dataType: 'json',
-        success: function(msg) {
-          alert( "Data Saved: " + msg );
-        }
-      });
-    });
+    reorder();
   });
 
+  function reorder(){
+    $(".ui-state-default").each(function(index){
+        $(this).attr('data-index', index + 1);
+        $.ajax({
+        type: "POST",
+        url: '/chapters/reorder/' + this.id,
+          data: {
+            chapter: {
+              order: $(this).attr('data-index'),
+              record_id: parseInt("#{params[:id]}")
+            }
+          },
+          dataType: 'json',
+          success: function(msg) {
+            alert( "Data Saved: " + msg );
+          }
+        });
+      });
+  }
+
   function new_chapter(){
-    save();
-    var newLi = '<li class="ui-state-default ui-sortable-handle" data-index="#{@chapters.count + 1}" id="#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1}">Untitled</li>';
+    max++;
+    size++
+    var newLi = '<li class="ui-state-default ui-sortable-handle" data-index='+size+' id='+max+'>Untitled<span class="glyphicon glyphicon-remove" id='+max+' style="float: right"></span></li>';
     $("#sortable").append(newLi);
-    var order = #{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order] + 1};
+    $(".simple-pagination").pagination('updateItems', size);
+    var order = max;
     changed = false;
+    save();
     $.ajax({
       type: "POST",
       url: '/chapters.json',

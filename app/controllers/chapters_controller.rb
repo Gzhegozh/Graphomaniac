@@ -1,6 +1,6 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token, only: [:create, :update, :reorder]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :reorder, :destroy]
   # GET /chapters
   # GET /chapters.json
   def index
@@ -10,6 +10,7 @@ class ChaptersController < ApplicationController
   # GET /chapters/1
   # GET /chapters/1.json
   def show
+    render json: {title: @chapter["title"], text: @chapter["content"]}
   end
 
   # GET /chapters/new
@@ -66,7 +67,7 @@ class ChaptersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chapter
-      @chapter = Chapter.find(params[:id])
+      @chapter = Chapter.where('record_id' => params[:chapter][:record_id], 'order' => params[:chapter][:order]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

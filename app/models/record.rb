@@ -1,6 +1,6 @@
 class Record < ActiveRecord::Base
   has_and_belongs_to_many :users
-  has_many :chapters
+  has_many :chapters, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy
 
   def self.add_user_record(user_id, record_id)
@@ -14,7 +14,7 @@ class Record < ActiveRecord::Base
   end
 
   def self.get_author(id)
-    @author = User.includes(:records).where('record.id' => id)
+    @author = User.includes(:records).where('records.id' => id)
   end
 
   def self.get_chapters(record_id)
@@ -23,12 +23,6 @@ class Record < ActiveRecord::Base
        ON chapters.record_id = records.id
        WHERE records.id = #{record_id}
        ORDER BY chapters.order")
-  end
-
-  def self.get_chapter_text(record_id, order)
-    connection = ActiveRecord::Base.connection
-    @text = connection.execute("SELECT chapters.title, chapters.content FROM chapters WHERE chapters.record_id = #{record_id} AND chapters.order = #{order}")
-    @text[0]
   end
 
   def self.get_records_with_authors
