@@ -36,7 +36,7 @@ gem 'haml-rails'
 gem 'erb2haml', :group => :development
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+gem 'jqcloud-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
