@@ -10,7 +10,6 @@
 
 
 :javascript
-
   current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
   updated_title = $("#chapter_title").text();
   updated_content = $("#chapter").text();
@@ -62,22 +61,24 @@
 
   $('#sortable').on('click', '.glyphicon.glyphicon-remove', function() {
     size--;
-    $("#sortable #" + $(this).attr('id').toString()).remove();
-    $.ajax({
-      type: "DELETE",
-      url: '/chapters/1.json',
-      data: {
-        chapter: {
-          order: $(this).attr('id'),
-          record_id: parseInt("#{params[:id]}")
-        }
-      },
-      dataType: 'json'
-      }).success(function(data) {
-        reorder();
-        $(".simple-pagination").pagination('selectPage', 1);
-        $(".simple-pagination").pagination('updateItems', size);
-      });
+    if (size >= 1){
+      $("#sortable #" + $(this).attr('id').toString()).remove();
+      $.ajax({
+        type: "DELETE",
+        url: '/chapters/1.json',
+        data: {
+          chapter: {
+            order: $(this).attr('id'),
+            record_id: parseInt("#{params[:id]}")
+          }
+        },
+        dataType: 'json'
+        }).success(function(data) {
+          reorder();
+          $(".simple-pagination").pagination('selectPage', 1);
+          $(".simple-pagination").pagination('updateItems', size);
+        });
+    }
   });
 
   $('#sortable').on("sortstop", function () {
