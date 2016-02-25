@@ -10,9 +10,39 @@
 
 
 :javascript
+  $(function() {
+    $('div#froala-editor').froalaEditor();
+  });
 
   $(function() {
-    $('textarea#froala-editor').froalaEditor()
+    $('#froala-editor')
+      .froalaEditor({
+        // Change save interval (time in miliseconds).
+        saveInterval: 2500,
+
+        // Set the save URL.
+        saveURL: '/chapters/1.json',
+        // HTTP request type.
+        saveMethod: 'PUT',
+
+        // Additional save params.
+        saveParams: {
+          chapter: {
+            title: '$("#chapter_title").text()',
+            content: $('#froala-editor').froalaEditor('html.get'),
+            order: current_chapter,
+            record_id: parseInt("#{params[:id]}")
+          }
+        }
+      })
+      .on('froalaEditor.save.before', function (e, editor) {
+        // Before save request is made.
+      })
+      .on('froalaEditor.save.after', function (e, editor, response) {
+      })
+      .on('froalaEditor.save.error', function (e, editor, error) {
+        // Do something here.
+      })
   });
 
   current_chapter = 1;
@@ -91,8 +121,9 @@
     }
   });
 
-  $('#sortable').on("sortstop", function () {
+  $('#sortable').on("sortstop", function (event, ui) {
     reorder();
+    $(".simple-pagination").pagination('selectPage', ui.item.attr("data-index"));
   });
 
   function reorder(){

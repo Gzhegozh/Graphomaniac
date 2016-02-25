@@ -28,7 +28,7 @@
           = chapter.title
           - break
       %br
-      %span{id: 'chapter'}
+      %div{id: 'chapter'}
     %br
 .simple-pagination
 %br
@@ -39,5 +39,41 @@
   %section{class:"comment-list"}
     = nested_comments @comments
   = render "comments/form"
+#new-anchor{class: 'glyphicon glyphicon-plus'}
+#bookmark-tip{class: 'alert alert-success'}
+  This bookmark will appear in your profile!
 
 :javascript
+
+  var txt;
+
+  $('#chapter').mouseup(function(e){
+    txt = window.getSelection().toString();
+    if (txt != "")
+      $('#new-anchor').css({left:e.pageX, top:e.pageY - 50}).fadeIn();
+  });
+
+  $('#chapter').mousedown(function(e){
+    $('#new-anchor').fadeOut();
+  });
+
+  $("#new-anchor").click(function(e){
+    $("#bookmark-tip").css({left:e.pageX, top:e.pageY - 50}).fadeIn(1500);
+    $("#bookmark-tip").fadeOut(1500);
+    $('#new-anchor').fadeOut();
+    surroundSelection();
+  })
+
+  function surroundSelection() {
+    var anchor = document.createElement("span");
+    //anchor.name = txt;
+    if (txt) {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var range = sel.getRangeAt(0).cloneRange();
+            range.surroundContents(anchor);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+  }

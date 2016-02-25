@@ -34,6 +34,20 @@ html{
   border-radius: 3px;
   width: 98%;
 }
+#new-anchor {
+  display: none;
+  width: 25px;
+  height: 25px;
+  color: #660003;
+  position: absolute;
+}
+#bookmark-tip {
+  display: none;
+  position: absolute;
+}
+#new-anchor.glyphicon-plus {
+  font-size: 1.5em;
+}
 .btn.btn-primary{
   background-color: RGB(156, 30, 28);
   border-color: RGB(156, 30, 28);

@@ -24,6 +24,7 @@ class ChaptersController < ApplicationController
 
   def reorder
     Chapter.reorder(params)
+    render json: {}
   end
   # POST /records
   # POST /chapters.json
