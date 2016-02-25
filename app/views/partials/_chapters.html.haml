@@ -136,6 +136,7 @@
         url: '/chapters/reorder/' + this.id,
           data: {
             chapter: {
+              title: $(this).text().trim(),
               order: $(this).attr('data-index'),
               record_id: parseInt("#{params[:id]}")
             }

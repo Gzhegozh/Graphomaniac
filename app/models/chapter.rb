@@ -10,6 +10,6 @@ class Chapter < ActiveRecord::Base
   end
 
   def self.reorder(params)
-    Chapter.where(order: params[:order],  record_id: params[:chapter][:record_id]).limit(1).update_all(order: params[:chapter][:order]);
+    Chapter.where(order: params[:order],  record_id: params[:chapter][:record_id], title: params[:chapter][:title]).limit(1).update_all(order: params[:chapter][:order]);
   end
 end
