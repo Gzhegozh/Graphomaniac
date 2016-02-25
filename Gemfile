@@ -32,11 +32,15 @@ gem 'twitter-bootstrap-rails'
 gem 'autoprefixer-rails'
 
 gem 'haml-rails'
-
+gem 'redcarpet'
 gem 'erb2haml', :group => :development
 # Use Unicorn as the app server
 # gem 'unicorn'
 gem 'jqcloud-rails'
+gem 'acts-as-taggable-on'
+gem 'wysiwyg-rails'
+gem 'ckeditor'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

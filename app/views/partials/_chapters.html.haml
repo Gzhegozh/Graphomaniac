@@ -1,7 +1,7 @@
-- if @chapters.count != 0
+- if @record.chapters.count != 0
   %ul{id: "sortable"}
     - i = 0
-    - @chapters.each do |chapter|
+    - @record.chapters.each do |chapter|
       - i += 1
       %li{class: "ui-state-default", id: "#{chapter.order}", 'data-index': "#{i}"}
         = chapter.title
@@ -10,13 +10,19 @@
 
 
 :javascript
-  current_chapter = #{@chapters.min{ |a,b| a[:order] <=> b[:order] }[:order]};
-  updated_title = $("#chapter_title").text();
-  updated_content = $("#chapter").text();
-  changed = false;
 
-  var size = parseInt("#{@chapters.size}");
-  var max = parseInt("#{@chapters.max{ |a,b| a[:order] <=> b[:order] }[:order]}");
+  $(function() {
+    $('textarea#froala-editor').froalaEditor()
+  });
+
+  current_chapter = 1;
+  updated_title = $("#chapter_title").text();
+  updated_content = $('#froala-editor').froalaEditor('html.get');
+  changed = false;
+  var isEditing = true;
+
+  var size = parseInt("#{@record.chapters.size}");
+  var max = parseInt("#{@record.chapters.max{ |a,b| a[:order] <=> b[:order] }[:order]}");
 
   $(".simple-pagination").pagination({
     items: size,
@@ -37,8 +43,11 @@
       },
       dataType: 'json'
       }).success(function(data) {
-        $("#chapter").val(data['text']);
         $("#chapter_title").val(data['title']);
+        if (isEditing)
+          $("#froala-editor").froalaEditor('html.set', data['text']);
+        else
+          $("#chapter").html(data['text']);
       });
     }
   });
@@ -47,16 +56,17 @@
     appendTo: document.body
   });
 
-  if (window.location.toString().indexOf("edit") != -1)
+  if (window.location.toString().indexOf("edit") != -1){
     $( "#sortable" ).sortable( "option", "disabled", false );
-  else
+    isEditing = true;
+  }
+  else {
     $( "#sortable" ).sortable( "option", "disabled", true );
+    isEditing = false;
+  }
 
   $('#sortable').on('click', '.ui-state-default', function() {
-    save();
     $(".simple-pagination").pagination('selectPage', $(this).attr("data-index"));
-    current_chapter = this.id;
-    changed = false;
   });
 
   $('#sortable').on('click', '.glyphicon.glyphicon-remove', function() {
@@ -88,6 +98,8 @@
   function reorder(){
     $(".ui-state-default").each(function(index){
         $(this).attr('data-index', index + 1);
+    });
+    $(".ui-state-default").each(function(){
         $.ajax({
         type: "POST",
         url: '/chapters/reorder/' + this.id,
@@ -97,10 +109,7 @@
               record_id: parseInt("#{params[:id]}")
             }
           },
-          dataType: 'json',
-          success: function(msg) {
-            alert( "Data Saved: " + msg );
-          }
+          dataType: 'json'
         });
       });
   }
@@ -112,8 +121,8 @@
     $("#sortable").append(newLi);
     $(".simple-pagination").pagination('updateItems', size);
     var order = max;
-    changed = false;
     save();
+    changed = false;
     $.ajax({
       type: "POST",
       url: '/chapters.json',
@@ -124,10 +133,6 @@
           order: order,
           record_id: #{params[:id]}
         }
-      },
-      dataType: 'json',
-      success: function(msg) {
-        alert( "Data Saved: " + msg );
       }
     });
   }
@@ -144,11 +149,11 @@
             order: current_chapter,
             record_id: parseInt("#{params[:id]}")
           }
-        },
-        dataType: 'json',
-        success: function(msg) {
-          alert( "Data Saved: " + msg );
         }
       });
     }
   }
+
+  jQuery(function(){
+   jQuery('#1').click();
+  });

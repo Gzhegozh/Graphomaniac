@@ -8,20 +8,17 @@
     %ul
       %li{id: "new_chapter", onclick: "new_chapter()", class: "btn btn-default"}
         Create Chapter
-    = render "partials/chapters", :chapters => @chapters
+    = render "partials/chapters", :chapters => @record.chapters
 .form-group
   .col-lg-12
     %label{for: "usr"}
       Chapter Title
     %textarea{class: "form-control", type: "text", id: "chapter_title", rows: '1', required: true, style: "font-weight: bold"}
-      - @chapters.each do |chapter|
+      - @record.chapters.each do |chapter|
         = chapter.title
         - break
     %br
-    %textarea{id: 'chapter', class: 'form-control', rows: '20', required: true}
-      - @chapters.each do |chapter|
-        = chapter.content
-        - break
+    %textarea{id: 'froala-editor'}
     %br
 .simple-pagination
 -#= link_to t('.destroy', :default => t("helpers.links.destroy")), chapter_path(), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

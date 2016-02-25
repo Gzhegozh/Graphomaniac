@@ -36,6 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     arel (6.0.3)
@@ -46,6 +48,13 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.2)
+    ckeditor (4.1.6)
+      cocaine
+      orm_adapter (~> 0.5.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.8)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -67,6 +76,8 @@ GEM
       html2haml
     erubis (2.7.0)
     execjs (2.6.0)
+    font-awesome-rails (4.5.0.1)
+      railties (>= 3.2, < 5.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -142,6 +153,7 @@ GEM
     rake (10.5.0)
     rdoc (4.2.2)
       json (~> 1.4)
+    redcarpet (3.3.4)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
     ruby_parser (3.8.1)
@@ -187,14 +199,19 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    wysiwyg-rails (2.1.0)
+      font-awesome-rails (~> 4.4, >= 4.4.0.0)
+      railties (>= 3.2, < 5.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on
   ancestry
   autoprefixer-rails
   byebug
+  ckeditor
   coffee-rails (~> 4.1.0)
   devise
   erb2haml
@@ -204,6 +221,7 @@ DEPENDENCIES
   jquery-rails
   pg
   rails (= 4.2.4)
+  redcarpet
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
@@ -211,6 +229,7 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+  wysiwyg-rails
 
 BUNDLED WITH
    1.10.6

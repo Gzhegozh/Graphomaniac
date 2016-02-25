@@ -7,8 +7,12 @@
   .form-group
     = f.label :description, class: 'control-label col-lg-1', style: 'text-align: left'
     .col-lg-5
-      = f.text_area :description, class: 'form-control', rows: '3', required: true
+      = f.text_area :description, class: 'form-control', rows: '3'
     = f.error_span(:description)
+  .form-group
+    = f.label :tags, class: 'control-label col-lg-1', style: 'text-align: left'
+    .col-lg-5
+      = f.text_field :tag_list, class: 'form-control', placeholder: 'Enter tags'
   .form-group
     .col-lg-offset-1.col-lg-10
       = f.submit nil,class: 'btn btn-primary'

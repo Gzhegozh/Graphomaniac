@@ -13,7 +13,7 @@ class RecordsController < ApplicationController
   # GET /records/1
   # GET /records/1.json
   def show
-    @chapters = Record.get_chapters(params[:id])
+    @record = Record.get_chapters(params[:id])
   end
 
   def comments
@@ -33,7 +33,7 @@ class RecordsController < ApplicationController
 
   # GET /records/1/edit
   def edit
-    @chapters = Record.get_chapters(params[:id])
+    @record = Record.get_chapters(params[:id])
   end
 
   # POST /records
@@ -85,7 +85,7 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params[:record].permit(:title, :description)
+      params[:record].permit(:title, :description, :tag_list)
     end
 
     def find_commentable

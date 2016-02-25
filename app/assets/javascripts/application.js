@@ -10,11 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
+//= require froala_editor.min.js
+
 
 var changed = false;
 var current_chapter;
@@ -41,14 +44,14 @@ $(document).on('ready page:change', function () {
         changed = true;
         updated_title = $(this).val();
         $("#"+current_chapter).html(updated_title + '<span class="glyphicon glyphicon-remove" id='+current_chapter+' style="float: right">');
-        updated_content = $("#chapter").val();
+        updated_content = $("#froala-editor").froalaEditor('html.get', true);
     });
 
-    $("#chapter").keyup(function() {
+    $('#froala-editor').on('froalaEditor.keyup',(function() {
         changed = true;
-        updated_content = $(this).val();
+        updated_content =  $('#froala-editor').froalaEditor('html.get', true);
         updated_title = $("#chapter_title").val();
-    });
+    }));
 
 
     $(function() {

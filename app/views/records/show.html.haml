@@ -17,20 +17,18 @@
 %br/
 = content_for :chapters do
   #chapters
-    = render "partials/chapters", :chapters => @chapters
+    = render "partials/chapters", :chapters => @record.chapters
 .form-group
   .col-lg-12
     %label{for: "usr"}
       Chapter Title
-    %textarea{class: "form-control", type: "text", id: "chapter_title", rows: '1', disabled: "true", style: "font-weight: bold"}
-      - @chapters.each do |chapter|
-        = chapter.title
-        - break
     %br
-    %textarea{id: 'chapter', class: 'form-control', disabled: "true", rows: '20'}
-      - @chapters.each do |chapter|
-        = chapter.content
-        - break
+      %textarea{class: "form-control", type: "text", id: "chapter_title", disabled: "true", rows: '1', required: true, style: "font-weight: bold"}
+        - @record.chapters.each do |chapter|
+          = chapter.title
+          - break
+      %br
+      %span{id: 'chapter'}
     %br
 .simple-pagination
 %br
@@ -42,3 +40,4 @@
     = nested_comments @comments
   = render "comments/form"
 
+:javascript
