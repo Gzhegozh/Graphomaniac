@@ -1,0 +1,7 @@
+%h2
+  Your bookmarks
+%hr
+  - @bookmarks.each do |b|
+    = b.record.title
+    = b.name
+    %br

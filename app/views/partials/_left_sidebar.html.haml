@@ -7,10 +7,13 @@
     - if user_signed_in?
       %li
         %a{ href: "/users/edit"}
-          Edit profile
+          My profile
       %li
         %a{ href: "/records/user/#{current_user.id}"}
           My books
+      %li
+        %a{ href: "/bookmarks/#{current_user.id}"}
+          My bookmarks
   -##example{class: 'col-lg-12', style: 'height: 200px'}
   -#:javascript
   -#  var word_array = [

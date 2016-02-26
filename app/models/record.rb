@@ -2,6 +2,7 @@ class Record < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :chapters, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :bookmarks, :dependent => :destroy
   acts_as_taggable
 
   def self.add_user_record(user_id, record_id)

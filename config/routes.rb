@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :bookmarks
   resources :chapters
   resources :records do
     resources :comments
