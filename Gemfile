@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'ancestry'
-
+gem 'searchkick'
 gem 'devise'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -39,7 +39,8 @@ gem 'erb2haml', :group => :development
 gem 'jqcloud-rails'
 gem 'acts-as-taggable-on'
 gem 'wysiwyg-rails'
-gem 'ckeditor'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

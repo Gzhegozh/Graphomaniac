@@ -48,13 +48,6 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.2)
-    ckeditor (4.1.6)
-      cocaine
-      orm_adapter (~> 0.5.0)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -72,10 +65,25 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    elasticsearch (1.0.15)
+      elasticsearch-api (= 1.0.15)
+      elasticsearch-transport (= 1.0.15)
+    elasticsearch-api (1.0.15)
+      multi_json
+    elasticsearch-model (0.1.8)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.8)
+    elasticsearch-transport (1.0.15)
+      faraday
+      multi_json
     erb2haml (0.1.5)
       html2haml
     erubis (2.7.0)
     execjs (2.6.0)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
@@ -88,6 +96,7 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
+    hashie (3.4.3)
     html2haml (2.0.0)
       erubis (~> 2.7.0)
       haml (~> 4.0.0)
@@ -119,6 +128,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
+    multipart-post (2.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
@@ -168,6 +178,10 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    searchkick (1.2.1)
+      activemodel
+      elasticsearch (>= 1)
+      hashie
     sexp_processor (4.7.0)
     spring (1.6.3)
     sprockets (3.5.2)
@@ -211,9 +225,10 @@ DEPENDENCIES
   ancestry
   autoprefixer-rails
   byebug
-  ckeditor
   coffee-rails (~> 4.1.0)
   devise
+  elasticsearch-model
+  elasticsearch-rails
   erb2haml
   haml-rails
   jbuilder (~> 2.0)
@@ -224,6 +239,7 @@ DEPENDENCIES
   redcarpet
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  searchkick
   spring
   turbolinks
   twitter-bootstrap-rails

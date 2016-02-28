@@ -7,9 +7,16 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    @records_authors = Record.get_records_with_authors
+    if params[:query].nil?
+      @records = Record.get_records_with_authors
+    else
+      @records = Record.search(params[:query], page: params[:page])
+    end
   end
 
+  def autocomplete
+    render json: Record.search(params[:query], autocomplete: true, limit: 10).map(&:title)
+  end
   # GET /records/1
   # GET /records/1.json
   def show

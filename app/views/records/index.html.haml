@@ -2,9 +2,16 @@
 .page-header
   %h1
     Available books and posts
+.col-lg-7
+  = form_tag records_path, class: "form-inline", method: :get do
+    .input-group.input-group-md
+      = text_field_tag :query, params[:query], class: "form-control", id: "record_search", autocomplete: "off"
+      .input-group-btn
+        = submit_tag "Search", class: "btn btn-primary"
+  %br
 .row
   .col-md-12
-    - if !@records_authors.empty?
+    - if !@records.empty?
       %table.table.table-striped
         %thead
           %tr
@@ -15,23 +22,29 @@
             %th= model_class.human_attribute_name(:authors)
             %th=t '.actions', :default => t("helpers.actions")
         %tbody
-          - @records_authors.each do |record|
+          - @records.each do |record|
             %tr
               -#%td= link_to record.id, record_path(record)
               %td= record.title
               %td= record.description
               %td= record.updated_at.strftime("%d %b. %Y %H:%M")
               %td
-                = record.name
-                -if record.alias
+                -#= record.name
+                -#-if record.alias
                   = '(' + record.alias + ')'
               %td
-                = link_to t('.read', :default => t("helpers.links.read")), record_path(record.record_id), :class => 'btn btn-default btn-xs'
+                = link_to t('.read', :default => t("helpers.links.read")), record_path(record.id), :class => 'btn btn-default btn-xs'
                 -#= link_to t('.destroy', :default => t("helpers.links.destroy")), record_path(record), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
     - else
-      .col-md-6
-        .alert-info
+      .col-lg-6
+        .alert.alert-info
           There is no books yet but you may write yours!
-    %br/
-    - if user_signed_in?
-      = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"
+      .col-lg-12
+        - if user_signed_in?
+          = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"
+
+:coffeescript
+  $ ->
+  $('#record_search').typeahead
+    name: "record"
+    remote: "/records/autocomplete?query=%QUERY"

@@ -2,6 +2,13 @@ Rails.application.routes.draw do
 
   resources :bookmarks
   resources :chapters
+  resources :records, only: :index do
+    collection do
+      post :import
+      get :autocomplete
+    end
+  end
+
   resources :records do
     resources :comments
   end
@@ -15,6 +22,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'records#index'
+
+  get 'search' => 'search#search'
 
   get 'records/user/:id' => 'records#show_user_records'
   post 'chapters/reorder/:order' => 'chapters#reorder'
