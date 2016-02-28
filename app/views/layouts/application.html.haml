@@ -21,7 +21,7 @@
     = javascript_include_tag 'jqcloud-1.0.4.min.js'
     = javascript_include_tag 'froala_editor.min.js'
     = csrf_meta_tags
-  %body
+  %body{id: 'body'}
     = render "partials/header"
     #all_content
       = render "partials/left_sidebar"

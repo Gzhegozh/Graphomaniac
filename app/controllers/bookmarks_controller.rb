@@ -11,7 +11,7 @@ class BookmarksController < ApplicationController
   # GET /bookmarks/1
   # GET /bookmarks/1.json
   def show
-    @bookmarks = Bookmark.all
+    render json: @bookmarks
   end
 
   # GET /bookmarks/new
@@ -66,7 +66,7 @@ class BookmarksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
-      @bookmarks = Bookmark.find_by_user_id(params[:id]);
+      @bookmarks = Bookmark.where('record_id' => params[:record_id], 'order' => params[:order])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

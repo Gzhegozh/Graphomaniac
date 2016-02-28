@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'records/user/:id' => 'records#show_user_records'
   post 'chapters/reorder/:order' => 'chapters#reorder'
+  delete 'comments/:id' => 'comments#destroy'
   #get 'users/sign_up'   => 'user/registrations#new'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -60,7 +60,6 @@
   $('#chapter').mousedown(function(e){
     $('#new-anchor').fadeOut();
   });
-
   $("#new-anchor").click(function(e){
     $("#bookmark-tip").css({left:e.pageX, top:e.pageY - 50}).fadeIn(1500);
     $("#bookmark-tip").fadeOut(1500);
@@ -93,7 +92,7 @@
   }
 
     function insertAnchor() {
-    var anchor = '<a name="' + txt + '"></a>';
+    var anchor = '<a id="' + txt.replace(/\s/g, '') + '"></a>';
     $.ajax({
       type: "POST",
       url: '/bookmarks.json',
@@ -108,7 +107,5 @@
         },
       },
       dataType: 'json'
-      }).success(function(data) {
-        alert("sdfsdf");
       });
   }

@@ -5,6 +5,9 @@
       = comment.user
 .col-md-10.col-sm-10
   .panel.panel-default.arrow.left
+    - if comment.user == current_user.name
+      .panel-heading.right
+        .glyphicon.glyphicon-remove{id: "#{comment.id.to_s + '_r'}"}
     .panel-body
       %header{class: "text-left"}
         .comment-user
@@ -20,3 +23,19 @@
         = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], :parent_id => comment), class: "btn btn-default btn-sm"
 .col-md-offset-1
   = nested_comments(comment.children, 1)
+
+:javascript
+
+  function removeComment(comment_id){
+    $.ajax({
+      type: "DELETE",
+      url: '/comments/' + comment_id,
+      dataType: 'json'
+      }).success(function(){
+        $('#' + comment_id.toString() + '_c').remove();
+      });
+  }
+
+  document.getElementById("#{comment.id.to_s + '_r'}").addEventListener("click", function() {
+    removeComment("#{comment.id}");
+  });

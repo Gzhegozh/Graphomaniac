@@ -62,7 +62,13 @@
       save();
       current_chapter = pageNumber;
       changed = false;
-      $.ajax({
+      get_chapter_text(pageNumber);
+      get_bookmarks(pageNumber);
+    }
+  });
+
+  function get_chapter_text(pageNumber){
+    $.ajax({
       type: "GET",
       url: '/chapters/1',
       data: {
@@ -78,9 +84,26 @@
           $("#froala-editor").froalaEditor('html.set', data['text']);
         else
           $("#chapter").html(data['text']);
-      });
-    }
-  });
+    });
+  }
+
+  function get_bookmarks(pageNumber){
+    $.ajax({
+      type: "GET",
+      url: '/bookmarks/1.json',
+      data: {
+        order: pageNumber,
+        record_id: parseInt("#{params[:id]}")
+      },
+      dataType: 'json'
+      }).success(function(data) {
+        var href = '';
+        data.forEach(function(item, i, arr) {
+          href += '<a href="#' + item['name'].replace(/\s/g, '') + '">' + item['name'] + '</a></br>';
+        });
+        $('#bookmarks').html(href);
+    });
+  }
 
   $( "#sortable" ).sortable({
     appendTo: document.body

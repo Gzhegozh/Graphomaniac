@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:destroy]
 
   def new
      @parent_id = params.delete(:parent_id)
@@ -19,6 +20,12 @@ class CommentsController < ApplicationController
      else
        flash[:error] = "Error adding comment."
      end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    render json: {}
   end
 
   private
