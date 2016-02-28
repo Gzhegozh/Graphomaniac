@@ -16,8 +16,10 @@
 %br/
 %br/
 = content_for :chapters do
-  #chapters
-    = render "partials/chapters", :chapters => @record.chapters
+  .col-lg-12{style: 'height: 100%'}
+    .slide-content
+      #chapters
+        = render "partials/chapters", :chapters => @record.chapters
 .form-group
   .col-lg-12
     %label{for: "usr"}
@@ -28,7 +30,7 @@
           = chapter.title
           - break
       %br
-      %div{id: 'chapter'}
+      #chapter
     %br
 .simple-pagination
 %br
