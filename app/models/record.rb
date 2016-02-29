@@ -5,6 +5,9 @@ class Record < ActiveRecord::Base
   acts_as_taggable
   searchkick autocomplete: ['title']
 
+  has_attached_file :cover, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://www.octopusbooks.co.uk/assets/img/newsletter_placeholder.jpg"
+  validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
+
   include Elasticsearch::Model
 
   def as_indexed_json(options={})
@@ -78,9 +81,6 @@ def self.add_user_record(user_id, record_id)
 
   def self.get_records_with_authors
     #@record = Record.includes(:users);
-    @records_authors = Record.find_by_sql("SELECT name, alias, title, description, records.updated_at, records.id FROM records
-      INNER JOIN records_users ON records.id = records_users.record_id
-      INNER JOIN users ON users.id = records_users.user_id
-      ORDER BY users.id")
+    @records_authors = Record.all
   end
 end

@@ -92,7 +92,7 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params[:record].permit(:title, :description, :tag_list)
+      params[:record].permit(:title, :description, :tag_list, :genre_id, :cover)
     end
 
     def find_commentable

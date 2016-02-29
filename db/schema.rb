@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229160358) do
+ActiveRecord::Schema.define(version: 20160229170149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,13 +60,14 @@ ActiveRecord::Schema.define(version: 20160229160358) do
   create_table "records", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "genre_id"
-    t.integer  "genres_id"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
   end
-
-  add_index "records", ["genres_id"], name: "index_records_on_genres_id", using: :btree
 
   create_table "records_users", id: false, force: :cascade do |t|
     t.integer "record_id"

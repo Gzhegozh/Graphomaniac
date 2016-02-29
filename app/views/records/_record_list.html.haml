@@ -6,7 +6,10 @@
           #carousel-2{class: "carousel slide slide-carousel", 'data-ride': "carousel"}
             .carousel-inner
               .item.active
-                %img{src:"http://lorempixel.com/150/150?rand=4", alt:"Image"}
+                - if record.cover.url != nil
+                  = image_tag record.cover.url(:medium)
+                - else
+                  %img{src:"http://lorempixel.com/150/150?rand=4", alt:"Image"}
           .slide-content{style: 'left: 20%;'}
             %h4
               = record.title
