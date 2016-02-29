@@ -1,18 +1,21 @@
 .col-md-2.col-sm-2.hidden-xs
   %figure{class:"thumbnail"}
-    %img{class:"img-responsive", src:"http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"}
+    - if User.find(comment.user_id).avatar.url != nil
+      = image_tag User.find(comment.user_id).avatar.url
+    - else
+      %img{class:"img-responsive", src:"http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"}
     %figcaption{class:"text-center"}
-      = comment.user
+      = comment.username
 .col-md-10.col-sm-10
   .panel.panel-default.arrow.left
-    - if comment.user == current_user.name
+    - if comment.user_id == current_user.id
       .panel-heading.right
         .glyphicon.glyphicon-remove{id: "#{comment.id.to_s + '_r'}"}
     .panel-body
       %header{class: "text-left"}
         .comment-user
           %i{class: "fa fa-user"}
-            =comment.user
+            = comment.username
         %time{class: "comment-date"}
           %i{class: "fa fa-clock-o"}
             = comment.created_at.strftime('%b %d, %Y at %H:%M')

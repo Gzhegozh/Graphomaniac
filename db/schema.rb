@@ -11,23 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229124538) do
+ActiveRecord::Schema.define(version: 20160229160358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
-    t.string  "name",        null: false
-    t.string  "anchor",      null: false
-    t.integer "index",       null: false
-    t.integer "chapter_id",  null: false
-    t.integer "user_id",     null: false
-    t.integer "chapters_id"
-    t.integer "users_id"
+    t.string  "name",       null: false
+    t.string  "anchor",     null: false
+    t.integer "index",      null: false
+    t.integer "chapter_id", null: false
+    t.integer "user_id",    null: false
   end
-
-  add_index "bookmarks", ["chapters_id"], name: "index_bookmarks_on_chapters_id", using: :btree
-  add_index "bookmarks", ["users_id"], name: "index_bookmarks_on_users_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -44,12 +39,13 @@ ActiveRecord::Schema.define(version: 20160229124538) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
-    t.string   "user"
+    t.string   "username"
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.string   "ancestry"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "comments", ["ancestry"], name: "index_comments_on_ancestry", using: :btree
@@ -115,6 +111,10 @@ ActiveRecord::Schema.define(version: 20160229124538) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20160229124538) do
   add_foreign_key "bookmarks", "chapters"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "chapters", "records"
+  add_foreign_key "comments", "users"
   add_foreign_key "genres", "categories"
   add_foreign_key "records", "genres"
 end

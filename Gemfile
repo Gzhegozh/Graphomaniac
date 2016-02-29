@@ -41,6 +41,7 @@ gem 'acts-as-taggable-on'
 gem 'wysiwyg-rails'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'paperclip', '~> 4.3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

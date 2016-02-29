@@ -1,10 +1,15 @@
 class User::RegistrationsController < Devise::RegistrationsController
   before_filter :sign_up_params, only: [:create]
+  before_filter :configure_permitted_parameters
 
    private
-     def sign_up_params
-       params.require(:user).permit(:name, :alias, :role, :email, :password, :password_confirmation)
-     end
+    def sign_up_params
+     params.require(:user).permit(:name, :alias, :role, :email, :password, :password_confirmation, :avatar)
+    end
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:account_update).push(:avatar)
+    end
 
      # def account_update_params
      #   params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
