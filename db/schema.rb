@@ -11,21 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226105047) do
+ActiveRecord::Schema.define(version: 20160229124538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bookmarks", force: :cascade do |t|
-    t.text     "anchor",     null: false
-    t.string   "name",       null: false
-    t.integer  "index",      null: false
-    t.integer  "order",      null: false
-    t.integer  "record_id",  null: false
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string  "name",        null: false
+    t.string  "anchor",      null: false
+    t.integer "index",       null: false
+    t.integer "chapter_id",  null: false
+    t.integer "user_id",     null: false
+    t.integer "chapters_id"
+    t.integer "users_id"
   end
+
+  add_index "bookmarks", ["chapters_id"], name: "index_bookmarks_on_chapters_id", using: :btree
+  add_index "bookmarks", ["users_id"], name: "index_bookmarks_on_users_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -64,7 +66,11 @@ ActiveRecord::Schema.define(version: 20160226105047) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "genre_id"
+    t.integer  "genres_id"
   end
+
+  add_index "records", ["genres_id"], name: "index_records_on_genres_id", using: :btree
 
   create_table "records_users", id: false, force: :cascade do |t|
     t.integer "record_id"
@@ -114,8 +120,9 @@ ActiveRecord::Schema.define(version: 20160226105047) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "bookmarks", "records"
+  add_foreign_key "bookmarks", "chapters"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "chapters", "records"
   add_foreign_key "genres", "categories"
+  add_foreign_key "records", "genres"
 end

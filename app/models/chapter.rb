@@ -1,5 +1,6 @@
 class Chapter < ActiveRecord::Base
   belongs_to :record
+  has_many :bookmarks, :dependent => :destroy
 
   def self.get_chapters(book_id)
     @chapters = Chapter.find_by(record_id: book_id)
@@ -10,6 +11,6 @@ class Chapter < ActiveRecord::Base
   end
 
   def self.reorder(params)
-    Chapter.where(order: params[:order],  record_id: params[:chapter][:record_id], title: params[:chapter][:title]).limit(1).update_all(order: params[:chapter][:order]);
+    Chapter.where(order: params[:order],  record_id: params[:chapter][:record_id], title: params[:chapter][:title]).limit(1).update_all(order: params[:chapter][:order])
   end
 end

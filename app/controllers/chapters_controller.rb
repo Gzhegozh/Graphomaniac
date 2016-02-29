@@ -10,11 +10,7 @@ class ChaptersController < ApplicationController
   # GET /chapters/1
   # GET /chapters/1.json
   def show
-    @bookmarks = Bookmark.where('record_id' => params[:chapter][:record_id], 'order' => params[:chapter][:order]).all
-    @bookmarks.each do |b|
-      @chapter['content'].insert(b.index, b.anchor)
-    end
-    render json: {title: @chapter['title'], text: @chapter['content']}
+    render json: {id: @chapter['id'], title: @chapter['title'], text: @chapter['content']}
   end
 
   # GET /chapters/new

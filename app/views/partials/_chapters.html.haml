@@ -14,38 +14,12 @@
     $('div#froala-editor').froalaEditor();
   });
 
-  $(function() {
-    $('#froala-editor')
-      .froalaEditor({
-        // Change save interval (time in miliseconds).
-        saveInterval: 2500,
-
-        // Set the save URL.
-        saveURL: '/chapters/1.json',
-        // HTTP request type.
-        saveMethod: 'PUT',
-
-        // Additional save params.
-        saveParams: {
-          chapter: {
-            title: '$("#chapter_title").text()',
-            content: $('#froala-editor').froalaEditor('html.get'),
-            order: current_chapter,
-            record_id: parseInt("#{params[:id]}")
-          }
-        }
-      })
-      .on('froalaEditor.save.before', function (e, editor) {
-        // Before save request is made.
-      })
-      .on('froalaEditor.save.after', function (e, editor, response) {
-      })
-      .on('froalaEditor.save.error', function (e, editor, error) {
-        // Do something here.
-      })
+  jQuery(function(){
+     jQuery('#1').click();
   });
 
   current_chapter = 1;
+  ch_id = 1;
   updated_title = $("#chapter_title").text();
   updated_content = $('#froala-editor').froalaEditor('html.get');
   changed = false;
@@ -63,7 +37,6 @@
       current_chapter = pageNumber;
       changed = false;
       get_chapter_text(pageNumber);
-      get_bookmarks(pageNumber);
     }
   });
 
@@ -79,21 +52,33 @@
       },
       dataType: 'json'
       }).success(function(data) {
-        $("#chapter_title").val(data['title']);
-        if (isEditing)
-          $("#froala-editor").froalaEditor('html.set', data['text']);
-        else
-          $("#chapter").html(data['text']);
+        ch_id = data['id'];
+        get_bookmarks();
+        $.ajax({
+          type: 'GET',
+          url: 'chapter/bookmarks',
+          data: {
+            chapter_id: ch_id,
+            user_id: parseInt("#{current_user.id}")
+          },
+          dataType: 'json'
+        }).success(function(data){
+          $("#chapter_title").val(data['title']);
+          if (isEditing)
+            $("#froala-editor").froalaEditor('html.set', data['text']);
+          else
+            $("#chapter").html(data['text']);
+        });
     });
   }
 
-  function get_bookmarks(pageNumber){
+  function get_bookmarks(){
     $.ajax({
       type: "GET",
       url: '/bookmarks/1.json',
       data: {
-        order: pageNumber,
-        record_id: parseInt("#{params[:id]}")
+        chapter_id: ch_id,
+        user_id: parseInt("#{current_user.id}")
       },
       dataType: 'json'
       }).success(function(data) {
@@ -165,7 +150,7 @@
             }
           },
           dataType: 'json'
-        });
+        })
       });
   }
 
@@ -208,7 +193,3 @@
       });
     }
   }
-
-  jQuery(function(){
-   jQuery('#1').click();
-  });

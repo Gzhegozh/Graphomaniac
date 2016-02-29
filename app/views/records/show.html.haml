@@ -95,19 +95,32 @@
 
     function insertAnchor() {
     var anchor = '<a id="' + txt.replace(/\s/g, '') + '"></a>';
+    var ch_id = 0;
     $.ajax({
-      type: "POST",
-      url: '/bookmarks.json',
+      type: "GET",
+      url: '/chapters/1',
       data: {
-        bookmark: {
-          anchor: anchor,
-          name: txt,
-          index: pos,
-          user_id: parseInt("#{current_user.id}"),
-          record_id: parseInt("#{params[:id]}"),
-          order: current_chapter
-        },
+        chapter: {
+          order: current_chapter,
+          record_id: parseInt("#{params[:id]}")
+        }
       },
       dataType: 'json'
-      });
+      }).success(function(data) {
+        ch_id = data['id'];
+        $.ajax({
+          type: "POST",
+          url: '/bookmarks.json',
+          data: {
+            bookmark: {
+              anchor: anchor,
+              name: txt,
+              index: pos,
+              user_id: parseInt("#{current_user.id}"),
+              chapter_id: ch_id
+            },
+          },
+          dataType: 'json'
+        });
+    });
   }

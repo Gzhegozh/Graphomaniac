@@ -1,19 +1,34 @@
 = form_for @record, html: { class: "form form-horizontal record" } do |f|
   .form-group
     = f.label :title, class: 'control-label col-lg-1', style: 'text-align: left'
-    .col-lg-5
+    .col-lg-6
       = f.text_field :title, class: 'form-control', required: true
     = f.error_span(:title)
   .form-group
     = f.label :description, class: 'control-label col-lg-1', style: 'text-align: left'
-    .col-lg-5
+    .col-lg-6
       = f.text_area :description, class: 'form-control', rows: '3'
     = f.error_span(:description)
   .form-group
     = f.label :tags, class: 'control-label col-lg-1', style: 'text-align: left'
-    .col-lg-5
+    .col-lg-6
       = f.text_field :tag_list, class: 'form-control', placeholder: 'Enter tags'
+  .form-group
+    .col-lg-6.col-lg-offset-1
+      = f.label :genre_id
+      %br
+      = f.collection_select :genre_id, Genre.all, :id, :name, :include_blank => false
   .form-group
     .col-lg-offset-1.col-lg-10
       = f.submit nil,class: 'btn btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), records_path, :class => 'btn btn-default'
+
+.form-group
+  .col-lg-6.col-lg-offset-1
+    %label
+      Category
+    %br
+    %select{id: 'Category'}
+      - Category.all.each do |c|
+        %option
+          = c.name

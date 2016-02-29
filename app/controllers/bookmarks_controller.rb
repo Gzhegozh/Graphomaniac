@@ -1,5 +1,5 @@
 class BookmarksController < ApplicationController
-  before_action :set_bookmark, only: [:show, :edit, :update, :destroy]
+  before_action :set_bookmark, only: [:show, :edit, :update, :destroy, :insert_bookmarks]
   skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
 
   # GET /bookmarks
@@ -19,6 +19,13 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new
   end
 
+  def insert_bookmarks
+    @chapter = Chapter.find_by_id(params[:chapter_id]);
+    @bookmarks.each do |b|
+      @chapter['content'].insert(b.index, b.anchor)
+    end
+    render json: {title: @chapter['title'], text: @chapter['content']}
+  end
   # GET /bookmarks/1/edit
   def edit
   end
@@ -66,11 +73,11 @@ class BookmarksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
-      @bookmarks = Bookmark.where('record_id' => params[:record_id], 'order' => params[:order])
+      @bookmarks = Bookmark.where('chapter_id' => params[:chapter_id], 'user_id' => params[:user_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bookmark_params
-      params.require(:bookmark).permit(:anchor, :index, :name, :user_id, :record_id, :order)
+      params.require(:bookmark).permit(:anchor, :index, :name, :user_id, :chapter_id)
     end
 end

@@ -2,13 +2,7 @@
 .page-header
   %h1
     Available books and posts
-.col-lg-7
-  = form_tag records_path, class: "form-inline", method: :get do
-    .input-group.input-group-md
-      = text_field_tag :query, params[:query], class: "form-control", id: "record_search", autocomplete: "off"
-      .input-group-btn
-        = submit_tag "Search", class: "btn btn-primary"
-  %br
+= render partial: 'search'
 .row
   = render partial: 'record_list'
 

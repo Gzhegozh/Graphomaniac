@@ -1,0 +1,33 @@
+.col-lg-8
+  = form_tag records_path, class: "form-inline", method: :get do
+    .input-group.input-group-md
+      = text_field_tag :query, params[:query], class: "form-control", id: "record_search", autocomplete: "off"
+      .input-group-btn
+        = submit_tag "Search", class: "btn btn-primary"
+    %select{id: 'category', name: 'category'}
+      %option
+        Choose category
+      - Category.all.each do |c|
+        %option
+          = c.name
+    %select{id: 'genre', name: 'genre'}
+      %option
+        Choose genre
+      - Genre.all.each do |g|
+        %option
+          = g.name
+  %br
+
+:javascript
+  $('#genre').change(function(){
+    search_by_categories();
+  })
+
+  $('#category').change(function(){
+    search_by_categories();
+  })
+
+  function search_by_categories(){
+    alert("sdf");
+  }
+

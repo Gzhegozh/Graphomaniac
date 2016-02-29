@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'search' => 'search#search'
 
   get 'records/user/:id' => 'records#show_user_records'
+  get 'records/:id/chapter/bookmarks' => 'bookmarks#insert_bookmarks'
   post 'chapters/reorder/:order' => 'chapters#reorder'
   delete 'comments/:id' => 'comments#destroy'
   #get 'users/sign_up'   => 'user/registrations#new'
