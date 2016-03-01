@@ -25,10 +25,11 @@
     .actions
       = f.submit "Update", :class => "btn btn-primary btn-md"
   .col-lg-6
-    - if resource.avatar.url != nil
-      %img{ id: 'preview', src: "#{resource.avatar.url}", class: 'col-lg-12', alt: 'Your image'}
-    - else
-      %img{ id: 'preview', src: 'http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg', class: 'col-lg-12', alt: 'Your image'}
+    .thumbnail{style: 'overflow: auto'}
+      - if resource.avatar.url != nil
+        %img{ id: 'preview', src: "#{resource.avatar.url}", class: 'col-lg-12', alt: 'Your image'}
+      - else
+        %img{ id: 'preview', src: 'http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg', class: 'col-lg-12', alt: 'Your image'}
 .col-lg-12
   %h3 Cancel my account
   %p

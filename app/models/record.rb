@@ -13,7 +13,7 @@ class Record < ActiveRecord::Base
 
   def as_indexed_json(options={})
     self.as_json(
-        only: [:id, :title, :description]
+        only: [:id, :title, :description, :genre, :category]
     )
   end
 
