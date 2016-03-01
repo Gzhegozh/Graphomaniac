@@ -3,12 +3,17 @@
 .page-header
   %h1
     By
+    - @record.users.each do |u|
+      - if u.alias != ''
+        = u.name + ' (' + u.alias + ')'
+      - else
+        = u.name
 
-.col-lg-2
+.col-lg-4
   %strong= model_class.human_attribute_name(:title) + ':'
   %br
   = @record.title
-.col-lg-2
+.col-lg-8
   %strong= model_class.human_attribute_name(:description) + ':'
   %br
   = @record.description
@@ -43,7 +48,7 @@
   = render "comments/form"
 #new-anchor{class: 'glyphicon glyphicon-plus'}
 #bookmark-tip{class: 'alert alert-success'}
-  This bookmark will appear in your profile!
+  This bookmark will a_tippear in your profile!
 
 :javascript
 

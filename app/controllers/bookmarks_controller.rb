@@ -20,11 +20,17 @@ class BookmarksController < ApplicationController
   end
 
   def insert_bookmarks
-    @chapter = Chapter.find_by_id(params[:chapter_id]);
+    notice = '';
+    @chapter = Chapter.find_by_id(params[:chapter_id])
     @bookmarks.each do |b|
-      @chapter['content'].insert(b.index, b.anchor)
-    end
-    render json: {title: @chapter['title'], text: @chapter['content']}
+      begin
+        @chapter['content'].insert(b.index, b.anchor)
+        rescue IndexError
+          notice = 'Some of your bookmarks may be not relevant'
+          next
+        end
+      end
+    render json: {notice: notice, title: @chapter['title'], text: @chapter['content']}
   end
   # GET /bookmarks/1/edit
   def edit

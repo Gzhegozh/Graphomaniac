@@ -8,9 +8,10 @@
       = comment.username
 .col-md-10.col-sm-10
   .panel.panel-default.arrow.left
-    - if comment.user_id == current_user.id
-      .panel-heading.right
-        .glyphicon.glyphicon-remove{id: "#{comment.id.to_s + '_r'}"}
+    - if !current_user.nil?
+      - if comment.user_id == current_user.id
+        .panel-heading.right
+          .glyphicon.glyphicon-remove{id: "#{comment.id.to_s + '_r'}"}
     .panel-body
       %header{class: "text-left"}
         .comment-user

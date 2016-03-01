@@ -53,16 +53,25 @@
       dataType: 'json'
       }).success(function(data) {
         ch_id = data['id'];
-        get_bookmarks();
+        user_id = 0;
+        #{if !current_user.nil?
+          :javascript
+            user_id = parseInt("#{current_user.id}");
+          end}
+        get_bookmarks(user_id);
         $.ajax({
           type: 'GET',
-          url: 'chapter/bookmarks',
+          url: 'chapters/bookmarks',
           data: {
             chapter_id: ch_id,
-            user_id: parseInt("#{current_user.id}")
+            user_id: user_id
           },
           dataType: 'json'
         }).success(function(data){
+          if(data['notice'] != ''){
+            html = '<div class="col-lg-12" style="margin-left: -10%"><div class = "alert alert-warning"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+data['notice']+'</div></div>';
+            $("#bookmarks").append(html);
+          }
           $("#chapter_title").val(data['title']);
           if (isEditing)
             $("#froala-editor").froalaEditor('html.set', data['text']);
@@ -72,13 +81,13 @@
     });
   }
 
-  function get_bookmarks(){
+  function get_bookmarks(user_id){
     $.ajax({
       type: "GET",
       url: '/bookmarks/1.json',
       data: {
         chapter_id: ch_id,
-        user_id: parseInt("#{current_user.id}")
+        user_id: user_id
       },
       dataType: 'json'
       }).success(function(data) {
@@ -86,6 +95,7 @@
         data.forEach(function(item, i, arr) {
           href += '<a href="#' + item['name'].replace(/\s/g, '') + '">' + item['name'] + '</a></br>';
         });
+        href += '</br>';
         $('#bookmarks').html(href);
     });
   }
@@ -136,22 +146,22 @@
 
   function reorder(){
     $(".ui-state-default").each(function(index){
-        $(this).attr('data-index', index + 1);
+      $(this).attr('data-index', index + 1);
     });
     $(".ui-state-default").each(function(){
-        $.ajax({
-        type: "POST",
-        url: '/chapters/reorder/' + this.id,
-          data: {
-            chapter: {
-              title: $(this).text().trim(),
-              order: $(this).attr('data-index'),
-              record_id: parseInt("#{params[:id]}")
-            }
-          },
-          dataType: 'json'
-        })
-      });
+      $.ajax({
+      type: "POST",
+      url: '/chapters/reorder/' + this.id,
+        data: {
+          chapter: {
+            title: $(this).text().trim(),
+            order: $(this).attr('data-index'),
+            record_id: parseInt("#{params[:id]}")
+          }
+        },
+        dataType: 'json'
+      })
+    });
   }
 
   function new_chapter(){

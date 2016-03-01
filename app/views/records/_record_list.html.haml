@@ -7,17 +7,29 @@
             .carousel-inner
               .item.active
                 - if record.cover.url != nil
-                  = image_tag record.cover.url(:medium)
-                - else
-                  %img{src:"http://lorempixel.com/150/150?rand=4", alt:"Image"}
+                  = image_tag record.cover.url, style: 'height: 180px; width: 130px'
           .slide-content{style: 'left: 20%;'}
             %h4
               = record.title
+            %i
+              by
+            - record.users.each do |u|
+              - if u.alias != ''
+                %i
+                  = u.name + ' (' + u.alias + ')'
+              - else
+                %i
+                  = u.name
             %time{class: "comment-date"}
               %i{class: "fa fa-clock-o"}
                 = record.updated_at.strftime("%d %b. %Y %H:%M")
+            %br
+            Genre:
+            = record.genre.name
+            %br
             %p
-              = record.description
+              %i
+                = record.description
           .slide-footer
             %span{class:"pull-right buttons"}
               - if current_page?(root_path)
@@ -32,3 +44,15 @@
     .col-lg-12
       - if user_signed_in?
         = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"
+  %br
+  .simple-pagination
+
+:javascript
+  $(".simple-pagination").pagination({
+    items: 100,
+    itemsOnPage: 5,
+    cssStyle: 'compact-theme',
+    onPageClick: function(pageNumber){
+
+    }
+  });

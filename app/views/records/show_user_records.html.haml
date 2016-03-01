@@ -5,5 +5,5 @@
 .row
   = render partial: 'record_list'
   %br
-  .col-lg-12
-    = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md"
+  .col-lg-12{style: 'margin-left: 1.5%'}
+    = link_to t('.new', :default => t("helpers.links.new")), new_record_path, :class => "btn btn-primary btn-md", style: 'width: 130px'
