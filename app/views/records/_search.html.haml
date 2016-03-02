@@ -4,18 +4,8 @@
       = text_field_tag :query, params[:query], class: "form-control", id: "record_search", autocomplete: "off"
       .input-group-btn
         = submit_tag "Search", class: "btn btn-primary"
-    %select{id: 'category', name: 'category'}
-      %option
-        Choose category
-      - Category.all.each do |c|
-        %option
-          = c.name
-    %select{id: 'genre', name: 'genre'}
-      %option
-        Choose genre
-      - Genre.all.each do |g|
-        %option
-          = g.name
+    = select_tag :category, options_from_collection_for_select(Category.all, "id", "name"), include_blank: "Choose Category", class: 'form-control'
+    = select_tag :genre, options_from_collection_for_select(Genre.all, "id", "name"), include_blank: "Choose Genre", class: 'form-control'
   %br
 
 :javascript
@@ -24,9 +14,34 @@
   })
 
   $('#category').change(function(){
+    get_genres();
     search_by_categories();
   })
 
+  function get_genres(){
+    val = $("#category").val();
+    url = '';
+    if (val == '')
+      url = 'get_genres';
+    else
+      url = 'get_genres/' + val;
+    $.ajax({
+      type: "GET",
+      url: url,
+    }).success(function(data) {
+      $("select#genre").empty();
+      $("select#genre").append( $("<option>")
+         .val('')
+         .html('Choose Genre')
+      );
+      data.forEach(function(item, i, arr) {
+        $("select#genre").append( $("<option>")
+            .val(item['id'])
+            .html(item['name'])
+        );
+      });
+    });
+  }
   function search_by_categories(){
     //alert("sdf");
   }

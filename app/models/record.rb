@@ -80,8 +80,4 @@ def self.add_user_record(user_id, record_id)
     @record = Record.includes(:chapters, :users).order('chapters.order').find(record_id);
   end
 
-  def self.get_records_with_authors
-    #@record = Record.includes(:users);
-    @records_authors = Record.all
-  end
 end

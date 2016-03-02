@@ -26,6 +26,10 @@ var updated_content;
 
 $(document).on('ready page:change', function () {
 
+    setTimeout(function() {
+        $("#1").trigger('click');
+    },10);
+
     function getChapterByIndex(index)
     {
         var matchingElement;

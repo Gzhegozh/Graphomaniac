@@ -11,8 +11,3 @@
   #attributes{type: 'hidden', 'data-max': "#{@record.chapters.max{ |a,b| a[:order] <=> b[:order] }[:order]}", 'data-size': "#{@record.chapters.size}", 'data-user-id': "#{current_user.id}", 'data-record-id': "#{params[:id]}"}
 - else
   #attributes{type: 'hidden', 'data-max': "#{@record.chapters.max{ |a,b| a[:order] <=> b[:order] }[:order]}", 'data-size': "#{@record.chapters.size}", 'data-user-id': "0", 'data-record-id': "#{params[:id]}"}
-
-:javascript
-    jQuery(function(){
-        jQuery('#1').click();
-    });

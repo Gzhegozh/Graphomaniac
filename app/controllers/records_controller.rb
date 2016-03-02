@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
   # GET /records.json
   def index
     if params[:query].nil?
-      @records = Record.get_records_with_authors
+      @records = Record.all
     else
       @records = Record.search(params[:query], page: params[:page])
     end

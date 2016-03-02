@@ -20,7 +20,7 @@ class BookmarksController < ApplicationController
   end
 
   def insert_bookmarks
-    notice = '';
+    notice = ''
     @chapter = Chapter.find_by_id(params[:chapter_id])
     @bookmarks.each do |b|
       begin

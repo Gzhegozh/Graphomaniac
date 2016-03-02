@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   get 'records/user/:id' => 'records#show_user_records'
   get 'records/:id/chapters/bookmarks' => 'bookmarks#insert_bookmarks'
   get 'records/chapters/bookmarks' => 'bookmarks#insert_bookmarks'
+
+  get 'get_genres/:category_id' => 'search#get_genres'
+  get 'get_genres' => 'search#get_genres'
   post 'chapters/reorder/:order' => 'chapters#reorder'
   delete 'comments/:id' => 'comments#destroy'
   #get 'users/sign_up'   => 'user/registrations#new'
