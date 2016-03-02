@@ -7,11 +7,19 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    if params[:query].nil?
+    if params[:query].blank? || params[:category].blank? || params[:genre_id].blank?
       @records = Record.all
     else
       @records = Record.search(params[:query], page: params[:page])
     end
+    if !params[:category].blank?
+      genre_ids = Genre.where('category_id' => params[:category])
+      @records = Record.where(genre_id: genre_ids.ids)
+    end
+    if !params[:genre_id].blank?
+      @records = Record.where(genre_id: params[:genre_id])
+    end
+
   end
 
   def autocomplete

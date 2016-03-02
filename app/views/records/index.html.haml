@@ -5,6 +5,8 @@
 = render partial: 'search'
 .row
   = render partial: 'record_list'
+= content_for :tag_cloud do
+  = render 'partials/tag_cloud'
 
 :coffeescript
   $ ->

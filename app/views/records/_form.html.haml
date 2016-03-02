@@ -10,11 +10,12 @@
       = f.error_span(:description)
     .form-group
       = f.label :tags, class: 'control-label col-lg-1', style: 'text-align: left'
-      = f.text_field :tag_list, class: 'form-control', placeholder: 'Enter tags'
+      = f.text_field :tag_list, class: 'form-control', placeholder: 'Enter tags', value: @record.tag_list.to_s
     .form-group
-      = f.label :genre_id
       %br
-      = f.collection_select :genre_id, Genre.all, :id, :name, :include_blank => false
+      = f.select_tag :category, options_from_collection_for_select(Category.all, "id", "name"), include_blank: "Choose Category", class: 'form-control'
+      %br
+      = f.collection_select(:genre_id, Genre.all, :id, :name, options = {:include_blank => false}, html_options = {:class => "form-control"})
       %br
       %br
       = f.file_field :cover
