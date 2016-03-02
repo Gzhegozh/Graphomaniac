@@ -36,15 +36,22 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # General Settings
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+
   config.action_mailer.smtp_settings = {
+      :enable_starttls_auto => true,
       :address => "smtp.gmail.com",
       :port => 587,
-      :authentication => :plain,   # I've also tried :login
-      :enable_starttls_auto => true,  # Also tried tls => true
-      :user_name => 'paulivanov95@gmail.com',
-      :password => 'mypassword'
+      :domain => "localhost:3000",
+      :authentication => :plain,
+      :user_name => Rails.application.secrets.gmail_email,
+      :password => Rails.application.secrets.gmail_password
   }
+
   Paperclip.options[:command_path] = "/usr/local/bin/"
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

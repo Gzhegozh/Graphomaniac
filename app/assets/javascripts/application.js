@@ -239,7 +239,7 @@ $(document).on('ready page:change', function () {
         updated_content = $("#froala-editor").froalaEditor('html.get', true);
     });
 
-    $('#froala-editor').on('froalaEditor.keyup',(function() {
+    $('#froala-editor').on('froalaEditor.contentChanged',(function() {
         changed = true;
         updated_content =  $('#froala-editor').froalaEditor('html.get', true);
         updated_title = $("#chapter_title").val();

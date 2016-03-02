@@ -12,11 +12,15 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'sender@mail.com'
+  config.mailer_sender = Rails.application.secrets.gmail_email
 
   config.scoped_views = true
   # Configure the class responsible to send e-mails.
   config.mailer = 'Devise::Mailer'
+
+  config.omniauth :facebook, Rails.application.secrets.fb_id, Rails.application.secrets.fb_secret
+  config.omniauth :twitter,  Rails.application.secrets.tw_id,  Rails.application.secrets.tw_secret
+  config.omniauth :linkedin,  Rails.application.secrets.link_id,  Rails.application.secrets.link_secret
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

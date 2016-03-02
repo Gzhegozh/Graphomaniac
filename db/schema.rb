@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229170149) do
+ActiveRecord::Schema.define(version: 20160302210938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20160229170149) do
   end
 
   add_index "genres", ["category_id"], name: "index_genres_on_category_id", using: :btree
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "records", force: :cascade do |t|
     t.string   "title"
@@ -116,6 +126,11 @@ ActiveRecord::Schema.define(version: 20160229170149) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "sign_in_count",          default: 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -126,5 +141,6 @@ ActiveRecord::Schema.define(version: 20160229170149) do
   add_foreign_key "chapters", "records"
   add_foreign_key "comments", "users"
   add_foreign_key "genres", "categories"
+  add_foreign_key "identities", "users"
   add_foreign_key "records", "genres"
 end
