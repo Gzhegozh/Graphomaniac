@@ -23,10 +23,19 @@
       .comment-post
         %p
           = simple_format comment.content
-      %p{class:"text-right"}
-        = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], :parent_id => comment), class: "btn btn-default btn-sm"
+      - if user_signed_in?
+        %p{class:"text-right"}
+          = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], :parent_id => comment), class: "btn btn-default btn-sm"
 .col-md-offset-1
   = nested_comments(comment.children, 1)
+- if !user_signed_in?
+  .col-lg-12
+    .alert.alert-warning
+      You need to
+      = link_to "sign in", new_user_session_path
+      or
+      = link_to "sign up", new_user_registration_path
+      to leave comments!
 
 :javascript
 

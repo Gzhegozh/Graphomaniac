@@ -1,5 +1,5 @@
 .col-lg-8
-  = form_tag records_path, class: "form-inline", method: :get do
+  = form_tag root_path, class: "form-inline", method: :get do
     .input-group.input-group-md
       = text_field_tag :query, params[:query], class: "form-control", id: "record_search", autocomplete: "off"
       .input-group-btn

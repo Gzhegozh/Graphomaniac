@@ -44,10 +44,6 @@ $(document).on('ready page:change', function () {
         $('div#froala-editor').froalaEditor();
     });
 
-    jQuery(function(){
-        jQuery('#1').click();
-    });
-
     current_chapter = 1;
     ch_id = 1;
     updated_title = $("#chapter_title").text();
@@ -165,6 +161,8 @@ $(document).on('ready page:change', function () {
         }
     });
 
+
+
     $('#sortable').on("sortstop", function (event, ui) {
         reorder();
         $(".simple-pagination").pagination('selectPage', ui.item.attr("data-index"));
@@ -268,6 +266,10 @@ $(document).on('ready page:change', function () {
         readURL(this);
     });
 
+    $("#record_cover").change(function(){
+        readURL(this);
+    });
+
     if ($('#attributes').attr('data-user-id') != 0) {
         var txt, pos;
 
@@ -300,7 +302,6 @@ $(document).on('ready page:change', function () {
                 priorRange.selectNodeContents(element);
                 priorRange.setEnd(range.startContainer, range.startOffset);
                 start = priorRange.toString().length;
-                end = start + range.toString().length;
             } else if (typeof document.selection != "undefined" &&
                 (sel = document.selection).type != "Control") {
                 range = sel.createRange();
@@ -308,7 +309,6 @@ $(document).on('ready page:change', function () {
                 priorRange.moveToElementText(element);
                 priorRange.setEndPoint("EndToStart", range);
                 start = priorRange.text.length;
-                end = start + range.text.length;
             }
             return {
                 start: start
