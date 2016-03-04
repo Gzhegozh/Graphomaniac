@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get 'get_genres/:category_id' => 'search#get_genres'
   get 'get_genres' => 'search#get_genres'
   get 'records/:id/get_genres/:category_id' => 'search#get_genres'
+  get 'records/get_genres/:category_id' => 'search#get_genres'
   post 'chapters/reorder/:order' => 'chapters#reorder'
   delete 'comments/:id' => 'comments#destroy'
   #get 'users/sign_up'   => 'user/registrations#new'

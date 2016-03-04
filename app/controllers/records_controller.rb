@@ -7,7 +7,7 @@ class RecordsController < ApplicationController
   # GET /records
   # GET /records.json
   def index
-    if params[:query].blank? || params[:category].blank? || params[:genre_id].blank?
+    if params[:query].blank? && params[:category].blank? && params[:genre_id].blank?
       @records = Record.all
     else
       @records = Record.search(params[:query], page: params[:page])

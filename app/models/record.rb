@@ -8,6 +8,7 @@ class Record < ActiveRecord::Base
 
   has_attached_file :cover, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "https://www.octopusbooks.co.uk/assets/img/newsletter_placeholder.jpg"
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
+  validates :title, presence: true
 
   include Elasticsearch::Model
 
