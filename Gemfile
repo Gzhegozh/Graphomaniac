@@ -31,6 +31,7 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
+gem 'react-rails', '~> 1.6.0'
 
 
 # Use ActiveModel has_secure_password
