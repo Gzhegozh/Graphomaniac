@@ -1,9 +1,0 @@
-/usr/local/bin/ruby -r ./siteconf20160130-10215-dr4v9a.rb extconf.rb
-creating Makefile
-
-make "DESTDIR=" clean
-
-make "DESTDIR="
-make: Цель `all' не требует выполнения команд.
-
-make "DESTDIR=" install

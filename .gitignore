@@ -8,7 +8,7 @@
 
 /log/*.log
 /tmp
-
+/vendor/bundle
 
 database.yml
 doc/
