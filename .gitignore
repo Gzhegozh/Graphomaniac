@@ -11,6 +11,7 @@
 /vendor/bundle
 
 database.yml
+secrets.yml
 doc/
 *.swp
 *~
